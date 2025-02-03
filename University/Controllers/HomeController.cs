@@ -8,12 +8,10 @@ namespace University.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private readonly UniversityContext _context;
 
-        public HomeController(ILogger<HomeController> logger, UniversityContext context)
+        public HomeController(UniversityContext context)
         {
-            _logger = logger;
             _context = context;
         }
 

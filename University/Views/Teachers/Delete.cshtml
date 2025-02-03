@@ -1,0 +1,29 @@
+﻿@model University.Models.Teacher;
+
+@{
+	ViewData["Title"] = "Delete teacher";
+}
+
+<h2>Delete teacher</h2>
+
+<div class="container">
+	<form asp-action="Delete">
+		<div class="form-group">
+			<label asp-for="FirstName"></label>
+			<input asp-for="FirstName" class="form-control" disabled />
+		</div>
+		<br />
+		<div class="form-group">
+			<label asp-for="LastName"></label>
+			<input asp-for="LastName" class="form-control" disabled />
+		</div>
+		<br /><br />
+		<button type="submit" class="btn btn-outline-danger">Delete</button>
+	</form>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

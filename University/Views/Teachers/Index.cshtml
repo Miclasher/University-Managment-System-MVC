@@ -1,7 +1,7 @@
-﻿@model IEnumerable<University.Models.Course>;
+﻿@model IEnumerable<University.Models.Teacher>;
 
 @{
-	ViewData["Title"] = "Course list";
+	ViewData["Title"] = "Teacher list";
 }
 
 <div class="container">
@@ -10,20 +10,17 @@
             <h2 class="text-start">Courses list</h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-action="Create" asp-controller="Courses" class="btn btn-dark">Create course</a>
+            <a asp-action="Create" asp-controller="Teachers" class="btn btn-dark">Create teacher</a>
         </div>
     </div>
     <table class="table table-borderless table-striped">
         <thead>
             <tr>
                 <th>
-                    Course name
+                    Teacher name
                 </th>
                 <th>
-                    Course description
-                </th>
-                <th>
-                    Actions
+                    Teacher surname
                 </th>
                 <th></th>
             </tr>
@@ -33,16 +30,16 @@
             {
                 <tr>
                     <td>
-                        @obj.Name
+                        @obj.FirstName
                     </td>
                     <td>
-                        @obj.Description
+                        @obj.LastName
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-controller="Courses" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
+                        <a asp-action="Edit" asp-controller="Teachers" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
                     </td>
                     <td>
-                        <a asp-action="Delete" asp-controller="Courses" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Delete" asp-controller="Teachers" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
             }
