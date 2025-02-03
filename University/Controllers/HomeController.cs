@@ -1,26 +1,60 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using University.Models;
+using University.DataLayer;
+using Microsoft.EntityFrameworkCore;
 
 namespace University.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly UniversityContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, UniversityContext context)
         {
             _logger = logger;
+            _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var courses = await _context.Courses.OrderBy(e => e.Name).ToListAsync();
+
+            return View(courses);
         }
 
-        public IActionResult Privacy()
+        public async Task<IActionResult> CourseGroups(Guid courseId)
         {
-            return View();
+            if (courseId == Guid.Empty)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var groups = await _context.Groups
+                .Include(e => e.Teacher)
+                .Include(e => e.Students)
+                .Where(e => e.CourseId == courseId)
+                .OrderBy(e => e.Name)
+                .ToListAsync();
+
+            return View(groups);
+        }
+
+        public async Task<IActionResult> GroupStudents(Guid groupId)
+        {
+            if (groupId == Guid.Empty)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var students = await _context.Students
+                .Where(e => e.GroupId == groupId)
+                .OrderBy(e => e.LastName)
+                .ThenBy(e => e.FirstName)
+                .ToListAsync();
+
+            return View(students);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

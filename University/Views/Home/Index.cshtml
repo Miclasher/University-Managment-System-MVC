@@ -1,8 +1,48 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<University.Models.Course>
+
+@{
+	ViewData["Title"] = "Courses";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Main page</h1>
+
+<div class="container">
+	@if (!Model.Any())
+	{
+		<br/>
+		<p class="h5">No courses found. You can add them using <a class="link-dark" asp-controller="Courses" asp-action="Index">course page</a>.</p>
+	}
+	else
+	{
+		<h2>Courses</h2>
+
+		<table class="table table-borderless table-striped">
+			<thead>
+				<tr>
+					<td>
+						<h4>Name</h4>
+					</td>
+					<td>
+						<h4>Description</h4>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var course in Model)
+				{
+					<tr>
+						<td>
+							<p>@course.Name</p>
+						</td>
+						<td>
+							<p>@course.Description</p>
+						</td>
+						<td>
+							<a class="btn btn-dark" asp-action="CourseGroups" asp-route-courseId="@course.Id">Group list</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
 </div>

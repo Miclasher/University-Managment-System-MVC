@@ -1,0 +1,45 @@
+﻿@model IEnumerable<University.Models.Student>
+
+@{
+	ViewData["Title"] = "Students";
+}
+
+<h1>Main page</h1>
+
+<div class="container">
+	@if (!Model.Any())
+	{
+		<br />
+		<p class="h5">No students found. You can add them using <a class="link-dark" asp-controller="Students" asp-action="Index">student page</a>.</p>
+	}
+	else
+	{
+		<h2>Students</h2>
+
+		<table class="table table-borderless table-striped">
+			<thead>
+				<tr>
+					<td>
+						<h4>Name</h4>
+					</td>
+					<td>
+						<h4>Surname</h4>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var student in Model)
+				{
+					<tr>
+						<td>
+							<p>@student.FirstName</p>
+						</td>
+						<td>
+							<p>@student.LastName</p>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</div>

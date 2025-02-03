@@ -1,0 +1,54 @@
+﻿@model IEnumerable<University.Models.Group>
+
+@{
+	ViewData["Title"] = "Groups";
+}
+
+<h1>Main page</h1>
+
+<div class="container">
+	@if (!Model.Any())
+	{
+		<br />
+		<p class="h5">No groups found. You can add them using <a class="link-dark" asp-controller="Groups" asp-action="Index">groups page</a>.</p>
+	}
+	else
+	{
+		<h2>Groups</h2>
+
+		<table class="table table-borderless table-striped">
+			<thead>
+				<tr>
+					<td>
+						<h4>Name</h4>
+					</td>
+					<td>
+						<h4>Tutor</h4>
+					</td>
+					<td>
+						<h4>Student count</h4>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var group in Model)
+				{
+					<tr>
+						<td>
+							<p>@group.Name</p>
+						</td>
+						<td>
+							<p>@group.Teacher.FirstName @group.Teacher.LastName</p>
+						</td>
+						<td>
+							<p>@group.Students.Count</p>
+						</td>
+						<td>
+							<a class="btn btn-dark" asp-action="GroupStudents" asp-route-groupId="@group.Id">Student list</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</div>

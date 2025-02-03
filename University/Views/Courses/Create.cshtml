@@ -1,0 +1,31 @@
+﻿@model University.Models.Course;
+
+@{
+	ViewData["Title"] = "Create course";
+}
+
+<h2>Create course</h2>
+
+<div class="container">
+	<form asp-action="Create">
+		<div class="form-group">
+			<label asp-for="Name"></label>
+			<input asp-for="Name" class="form-control" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="form-group">
+			<label asp-for="Description"></label>
+			<input asp-for="Description" class="form-control" />
+			<span asp-validation-for="Description" class="text-danger"></span>
+		</div>
+		<br /><br />
+		<button type="submit" class="btn btn-dark">Create</button>
+	</form>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
