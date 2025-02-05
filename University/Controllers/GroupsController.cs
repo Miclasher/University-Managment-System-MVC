@@ -22,6 +22,9 @@ namespace University.Controllers
                 .OrderBy(e => e.Name)
                 .ToListAsync();
 
+            ViewData["TeachersPresent"] = await _context.Teachers.AnyAsync();
+            ViewData["CoursesPresent"] = await _context.Courses.AnyAsync();
+
             return View(Groups);
         }
 

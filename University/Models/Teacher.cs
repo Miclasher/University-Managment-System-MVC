@@ -12,10 +12,12 @@ namespace University.Models
         [Column("FIRST_NAME")]
         [DisplayName("Name")]
         [MinLength(1)]
+        [Required(ErrorMessage = "Please enter teacher's name")]
         public string FirstName { get; set; } = string.Empty;
         [Column("LAST_NAME")]
         [DisplayName("Surname")]
         [MinLength(1)]
+        [Required(ErrorMessage = "Please enter teacher's surname")]
         public string LastName { get; set; } = string.Empty;
         public ObservableCollection<Group> Groups { get; set; } = new ObservableCollection<Group>();
 

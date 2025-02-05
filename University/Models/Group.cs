@@ -12,12 +12,15 @@ namespace University.Models
         public Guid Id { get; set; }
         [Column("NAME")]
         [MinLength(1)]
+        [Required(ErrorMessage = "Please enter group name")]
         public string Name { get; set; } = string.Empty;
         [Column("COURSE_ID")]
+        [Required(ErrorMessage = "Please select a course")]
         public Guid CourseId { get; set; }
         [ValidateNever]
         public Course Course { get; set; } = null!;
         [Column("TEACHER_ID")]
+        [Required(ErrorMessage = "Please select a tutor for a group")]
         public Guid TeacherId { get; set; }
         [DisplayName("Tutor")]
         [ValidateNever]

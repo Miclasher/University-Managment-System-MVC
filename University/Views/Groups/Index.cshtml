@@ -2,6 +2,8 @@
 
 @{
 	ViewData["Title"] = "Group list";
+    bool teachersPresent = (bool?)ViewData["TeachersPresent"] ?? false;
+    bool coursesPresent = (bool?)ViewData["CoursesPresent"] ?? false;
 }
 
 <div class="container">
@@ -10,7 +12,12 @@
             <h2 class="text-start">Groups list</h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-action="Create" asp-controller="Groups" class="btn btn-dark">Create Group</a>
+            @if (teachersPresent && coursesPresent){
+                <a asp-action="Create" asp-controller="Groups" class="btn btn-dark">Create Group</a>
+            }
+            else{
+                <p class="text-danger">Please add teachers and courses to create group</p>
+            }
         </div>
     </div>
     <table class="table table-borderless table-striped">

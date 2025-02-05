@@ -16,7 +16,13 @@ namespace University.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            var Students = await _context.Students.Include(e => e.Group).OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToListAsync();
+            var Students = await _context.Students
+                .Include(e => e.Group)
+                .OrderBy(e => e.LastName)
+                .ThenBy(e => e.FirstName)
+                .ToListAsync();
+
+            ViewData["GroupsPresent"] = await _context.Groups.AnyAsync();
 
             return View(Students);
         }
