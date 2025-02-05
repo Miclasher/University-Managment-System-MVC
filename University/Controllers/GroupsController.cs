@@ -102,6 +102,8 @@ namespace University.Controllers
 
             await LoadViewBagAsync();
 
+           ViewBag.StudentsPresent = Group.Students.Any();
+
             return View(Group);
         }
 
@@ -117,6 +119,22 @@ namespace University.Controllers
             }
 
             _context.Groups.Remove(Group);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> ClearAsync(Guid id)
+        {
+            var targetGroup = await _context.Groups.Include(e => e.Students).Where(e => e.Id == id).FirstOrDefaultAsync();
+
+            if (targetGroup is null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            _context.Students.RemoveRange(targetGroup.Students);
+
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
