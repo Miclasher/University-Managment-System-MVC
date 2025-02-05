@@ -15,14 +15,14 @@ namespace University.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> IndexAsync()
         {
             var courses = await _context.Courses.OrderBy(e => e.Name).ToListAsync();
 
             return View(courses);
         }
 
-        public async Task<IActionResult> CourseGroups(Guid courseId)
+        public async Task<IActionResult> CourseGroupsAsync(Guid courseId)
         {
             if (courseId == Guid.Empty)
             {
@@ -39,7 +39,7 @@ namespace University.Controllers
             return View(groups);
         }
 
-        public async Task<IActionResult> GroupStudents(Guid groupId)
+        public async Task<IActionResult> GroupStudentsAsync(Guid groupId)
         {
             if (groupId == Guid.Empty)
             {

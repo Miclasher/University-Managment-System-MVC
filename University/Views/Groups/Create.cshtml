@@ -1,0 +1,49 @@
+﻿@model University.Models.Group;
+
+@{
+	ViewData["Title"] = "Create Group";
+}
+
+<h2>Create Group</h2>
+
+<div class="container">
+	<form asp-action="Create">
+		<div class="form-group">
+			<label asp-for="Name"></label>
+			<input asp-for="Name" class="form-control" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="form-group">
+			<label asp-for="Teacher"></label>
+			<select asp-for="TeacherId" class="form-control">
+				<option value="">Select a teacher</option>
+				@foreach (var teacher in (ViewData["Teachers"] as IEnumerable<University.Models.Teacher>)!)
+				{
+					<option value="@teacher.Id">@teacher.FirstName @teacher.LastName</option>
+				}
+			</select>
+			<span asp-validation-for="TeacherId" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="form-group">
+			<label asp-for="Course"></label>
+			<select asp-for="CourseId" class="form-control">
+				<option value="">Select a course</option>
+				@foreach (var course in (ViewData["Courses"] as IEnumerable<University.Models.Course>)!)
+				{
+					<option value="@course.Id">@course.Name</option>
+				}
+			</select>
+			<span asp-validation-for="CourseId" class="text-danger"></span>
+		</div>
+		<br /><br />
+		<button type="submit" class="btn btn-dark">Create</button>
+	</form>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

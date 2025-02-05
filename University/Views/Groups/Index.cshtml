@@ -1,26 +1,29 @@
-﻿@model IEnumerable<University.Models.Teacher>;
+﻿@model IEnumerable<University.Models.Group>;
 
 @{
-	ViewData["Title"] = "Teacher list";
+	ViewData["Title"] = "Group list";
 }
 
 <div class="container">
     <div class="row pt-4">
         <div class="col-6 pb-3">
-            <h2 class="text-start">Courses list</h2>
+            <h2 class="text-start">Groups list</h2>
         </div>
         <div class="col-6 text-end">
-            <a asp-action="Create" asp-controller="Teachers" class="btn btn-dark">Create teacher</a>
+            <a asp-action="Create" asp-controller="Groups" class="btn btn-dark">Create Group</a>
         </div>
     </div>
     <table class="table table-borderless table-striped">
         <thead>
             <tr>
                 <th>
-                    Teacher name
+                    Group name
                 </th>
                 <th>
-                    Teacher surname
+                    Group tutor
+                </th>
+                <th>
+                    Students count
                 </th>
                 <th>
                     Actions
@@ -33,16 +36,19 @@
             {
                 <tr>
                     <td>
-                        @obj.FirstName
+                        @obj.Name
                     </td>
                     <td>
-                        @obj.LastName
+                        @obj.Teacher.LastName @obj.Teacher.FirstName
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-controller="Teachers" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
+						@obj.Students.Count
                     </td>
                     <td>
-                        <a asp-action="Delete" asp-controller="Teachers" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Edit" asp-controller="Groups" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="Groups" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
             }

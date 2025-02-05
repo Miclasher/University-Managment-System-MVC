@@ -5,39 +5,46 @@ using University.Models;
 
 namespace University.Controllers
 {
-    public class CoursesController : Controller
+    public class GroupsController : Controller
     {
         private readonly UniversityContext _context;
 
-        public CoursesController(UniversityContext context)
+        public GroupsController(UniversityContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            var courses = await _context.Courses.OrderBy(e => e.Name).ToListAsync();
+            var Groups = await _context.Groups
+                .Include(e => e.Teacher)
+                .Include(e => e.Students)
+                .OrderBy(e => e.Name)
+                .ToListAsync();
 
-            return View(courses);
+            return View(Groups);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
+            ViewData["Teachers"] = await _context.Teachers.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToListAsync();
+            ViewData["Courses"] = await _context.Courses.OrderBy(e => e.Name).ToListAsync();
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(Course course)
+        public async Task<IActionResult> CreateAsync(Group Group)
         {
             if (ModelState.IsValid)
             {
-                _context.Courses.Add(course);
+                _context.Groups.Add(Group);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(course);
+            return View(Group);
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
@@ -47,27 +54,27 @@ namespace University.Controllers
                 return RedirectToAction("Index");
             }
 
-            var course = await _context.Courses.FindAsync(id);
+            var Group = await _context.Groups.FindAsync(id);
 
-            if (course is null)
+            if (Group is null)
             {
                 return RedirectToAction("Index");
             }
 
-            return View(course);
+            return View(Group);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(Course course)
+        public async Task<IActionResult> EditAsync(Group Group)
         {
             if (ModelState.IsValid)
             {
-                _context.Courses.Update(course);
+                _context.Groups.Update(Group);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(course);
+            return View(Group);
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
@@ -77,25 +84,25 @@ namespace University.Controllers
                 return RedirectToAction("Index");
             }
 
-            var course = await _context.Courses.FindAsync(id);
+            var Group = await _context.Groups.FindAsync(id);
 
-            if (course is null)
+            if (Group is null)
             {
                 return RedirectToAction("Index");
             }
 
-            return View(course);
+            return View(Group);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAsync(Course course)
+        public async Task<IActionResult> DeleteAsync(Group Group)
         {
-            if (!_context.Courses.Contains(course))
+            if (!_context.Groups.Contains(Group))
             {
                 return RedirectToAction("Index");
             }
-            _context.Courses.Remove(course);
+            _context.Groups.Remove(Group);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
