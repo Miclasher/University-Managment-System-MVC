@@ -85,6 +85,8 @@ namespace University.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.GroupsPresent = await _context.Groups.AnyAsync(e => e.CourseId == id);
+
             return View(course);
         }
 
