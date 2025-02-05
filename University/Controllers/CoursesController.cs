@@ -67,6 +67,7 @@ namespace University.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
+
             return View(course);
         }
 
@@ -95,8 +96,10 @@ namespace University.Controllers
             {
                 return RedirectToAction("Index");
             }
+
             _context.Courses.Remove(course);
             await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
     }

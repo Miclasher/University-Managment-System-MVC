@@ -5,39 +5,43 @@ using University.Models;
 
 namespace University.Controllers
 {
-    public class TeachersController : Controller
+    public class StudentsController : Controller
     {
         private readonly UniversityContext _context;
 
-        public TeachersController(UniversityContext context)
+        public StudentsController(UniversityContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            var Teachers = await _context.Teachers.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToListAsync();
+            var Students = await _context.Students.Include(e => e.Group).OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToListAsync();
 
-            return View(Teachers);
+            return View(Students);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
+            await LoadViewBagAsync();
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(Teacher Teacher)
+        public async Task<IActionResult> CreateAsync(Student Student)
         {
+            await LoadViewBagAsync();
+
             if (ModelState.IsValid)
             {
-                _context.Teachers.Add(Teacher);
+                _context.Students.Add(Student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(Teacher);
+            return View(Student);
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
@@ -47,29 +51,33 @@ namespace University.Controllers
                 return RedirectToAction("Index");
             }
 
-            var Teacher = await _context.Teachers.FindAsync(id);
+            var Student = await _context.Students.FindAsync(id);
 
-            if (Teacher is null)
+            if (Student is null)
             {
                 return RedirectToAction("Index");
             }
 
-            return View(Teacher);
+            await LoadViewBagAsync();
+
+            return View(Student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(Teacher Teacher)
+        public async Task<IActionResult> EditAsync(Student Student)
         {
+            await LoadViewBagAsync();
+
             if (ModelState.IsValid)
             {
-                _context.Teachers.Update(Teacher);
+                _context.Students.Update(Student);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
 
-            return View(Teacher);
+            return View(Student);
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
@@ -79,29 +87,38 @@ namespace University.Controllers
                 return RedirectToAction("Index");
             }
 
-            var Teacher = await _context.Teachers.FindAsync(id);
+            var Student = await _context.Students.FindAsync(id);
 
-            if (Teacher is null)
+            if (Student is null)
             {
                 return RedirectToAction("Index");
             }
 
-            return View(Teacher);
+            await LoadViewBagAsync();
+
+            return View(Student);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAsync(Teacher Teacher)
+        public async Task<IActionResult> DeleteAsync(Student Student)
         {
-            if (!_context.Teachers.Contains(Teacher))
+            await LoadViewBagAsync();
+
+            if (!_context.Students.Contains(Student))
             {
                 return RedirectToAction("Index");
             }
 
-            _context.Teachers.Remove(Teacher);
+            _context.Students.Remove(Student);
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        private async Task LoadViewBagAsync()
+        {
+            ViewBag.Groups = await _context.Groups.OrderBy(e => e.Name).ToListAsync();
         }
     }
 }

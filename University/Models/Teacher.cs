@@ -18,5 +18,7 @@ namespace University.Models
         [MinLength(1)]
         public string LastName { get; set; } = string.Empty;
         public ObservableCollection<Group> Groups { get; set; } = new ObservableCollection<Group>();
+
+        public string FullName => $"{FirstName} {LastName}";
     }
 }

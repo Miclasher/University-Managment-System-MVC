@@ -1,7 +1,7 @@
 ﻿@model University.Models.Group;
 
 @{
-	ViewData["Title"] = "Create Group";
+	ViewData["Title"] = "Create group";
 }
 
 <h2>Create Group</h2>
@@ -16,25 +16,13 @@
 		<br />
 		<div class="form-group">
 			<label asp-for="Teacher"></label>
-			<select asp-for="TeacherId" class="form-control">
-				<option value="">Select a teacher</option>
-				@foreach (var teacher in (ViewData["Teachers"] as IEnumerable<University.Models.Teacher>)!)
-				{
-					<option value="@teacher.Id">@teacher.FirstName @teacher.LastName</option>
-				}
-			</select>
+			<select asp-for="TeacherId" class="form-control" asp-items="@(new SelectList(ViewBag.Teachers, "Id", "FullName"))"></select>
 			<span asp-validation-for="TeacherId" class="text-danger"></span>
 		</div>
 		<br />
 		<div class="form-group">
 			<label asp-for="Course"></label>
-			<select asp-for="CourseId" class="form-control">
-				<option value="">Select a course</option>
-				@foreach (var course in (ViewData["Courses"] as IEnumerable<University.Models.Course>)!)
-				{
-					<option value="@course.Id">@course.Name</option>
-				}
-			</select>
+			<select asp-for="CourseId" class="form-control" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))"></select>
 			<span asp-validation-for="CourseId" class="text-danger"></span>
 		</div>
 		<br /><br />

@@ -1,0 +1,38 @@
+﻿@model University.Models.Student;
+
+@{
+	ViewData["Title"] = "Create Student";
+}
+
+<h2>Create Student</h2>
+
+<div class="container">
+	<form asp-action="Create">
+		<div class="form-Student">
+			<label asp-for="FirstName"></label>
+			<input asp-for="FirstName" class="form-control" />
+			<span asp-validation-for="FirstName" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="form-Student">
+			<label asp-for="LastName"></label>
+			<input asp-for="LastName" class="form-control" />
+			<span asp-validation-for="LastName" class="text-danger"></span>
+		</div>
+		<br />
+		<br />
+		<div class="form-Student">
+			<label asp-for="Group"></label>
+			<select asp-for="GroupId" class="form-control" asp-items="@(new SelectList(ViewBag.Groups, "Id", "Name"))"></select>
+			<span asp-validation-for="GroupId" class="text-danger"></span>
+		</div>
+		<br /><br />
+		<button type="submit" class="btn btn-dark">Create</button>
+	</form>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

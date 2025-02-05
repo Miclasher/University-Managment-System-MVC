@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,6 +19,7 @@ namespace University.Models
         public string LastName { get; set; } = string.Empty;
         [Column("GROUP_ID")]
         public Guid GroupId { get; set; }
+        [ValidateNever]
         public Group Group { get; set; } = null!;
     }
 }
