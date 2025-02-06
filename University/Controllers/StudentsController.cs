@@ -24,6 +24,11 @@ namespace University.Controllers
 
             ViewData["GroupsPresent"] = await _context.Groups.AnyAsync();
 
+            if (TempData != null)
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
+
             return View(Students);
         }
 
@@ -113,6 +118,8 @@ namespace University.Controllers
 
             if (!_context.Students.Contains(Student))
             {
+                TempData["ErrorMessage"] = "It looks like student was already deleted.";
+
                 return RedirectToAction("Index");
             }
 

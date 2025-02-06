@@ -16,7 +16,15 @@ namespace University.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            var Teachers = await _context.Teachers.OrderBy(e => e.LastName).ThenBy(e => e.FirstName).ToListAsync();
+            var Teachers = await _context.Teachers
+                .OrderBy(e => e.LastName)
+                .ThenBy(e => e.FirstName)
+                .ToListAsync();
+
+            if (TempData != null)
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
 
             return View(Teachers);
         }
@@ -97,6 +105,8 @@ namespace University.Controllers
         {
             if (!_context.Teachers.Contains(Teacher))
             {
+                TempData["ErrorMessage"] = "It looks like teacher was already deleted.";
+
                 return RedirectToAction("Index");
             }
 

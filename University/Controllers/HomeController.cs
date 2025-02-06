@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using University.Models;
-using University.DataLayer;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using University.DataLayer;
+using University.Models;
 
 namespace University.Controllers
 {

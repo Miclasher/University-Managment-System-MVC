@@ -27,7 +27,7 @@
 			<span asp-validation-for="CourseId" class="text-danger"></span>
 		</div>
 		<br /><br />
-		@if (studentsPresent)
+		@if (!studentsPresent)
 		{
 			<button type="submit" class="btn btn-dark">Delete</button>
 		}

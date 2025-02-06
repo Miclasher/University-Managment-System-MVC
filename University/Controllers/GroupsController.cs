@@ -25,6 +25,11 @@ namespace University.Controllers
             ViewData["TeachersPresent"] = await _context.Teachers.AnyAsync();
             ViewData["CoursesPresent"] = await _context.Courses.AnyAsync();
 
+            if (TempData != null)
+            {
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+            }
+
             return View(Groups);
         }
 
@@ -102,7 +107,7 @@ namespace University.Controllers
 
             await LoadViewBagAsync();
 
-           ViewBag.StudentsPresent = Group.Students.Any();
+            ViewBag.StudentsPresent = await _context.Students.Where(e => e.GroupId == id).AnyAsync();
 
             return View(Group);
         }
@@ -115,6 +120,8 @@ namespace University.Controllers
 
             if (!_context.Groups.Contains(Group))
             {
+                TempData["ErrorMessage"] = "It looks like group was already deleted.";
+
                 return RedirectToAction("Index");
             }
 

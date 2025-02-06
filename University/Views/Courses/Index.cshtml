@@ -8,6 +8,12 @@
     <div class="row pt-4">
         <div class="col-6 pb-3">
             <h2 class="text-start">Courses list</h2>
+
+            @if (ViewBag.ErrorMessage is not null)
+            {
+                <p class="text-danger">@ViewBag.ErrorMessage</p>
+            }
+
         </div>
         <div class="col-6 text-end">
             <a asp-action="Create" asp-controller="Courses" class="btn btn-dark">Create course</a>
