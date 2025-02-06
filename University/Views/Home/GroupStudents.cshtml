@@ -2,6 +2,7 @@
 
 @{
 	ViewData["Title"] = "Students";
+	var courseId = (Guid?)ViewBag.CourseId;
 }
 
 <h1>Main page</h1>
@@ -15,6 +16,11 @@
 	else
 	{
 		<h2>Students</h2>
+
+		@if (ViewBag.CourseId is not null)
+		{
+			<a asp-action="CourseGroups" asp-route-courseId="@courseId" class="btn btn-dark">Back</a>
+		}
 
 		<table class="table table-borderless table-striped">
 			<thead>

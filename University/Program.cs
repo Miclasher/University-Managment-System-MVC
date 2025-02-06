@@ -11,7 +11,11 @@ namespace University
 
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddDbContext<UniversityContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            var config = new ConfigurationBuilder()
+                            .AddUserSecrets<UniversityContext>()
+                            .Build();
+
+            builder.Services.AddDbContext<UniversityContext>(options => options.UseSqlServer(config["DbConnectionString"]));
 
             var app = builder.Build();
 

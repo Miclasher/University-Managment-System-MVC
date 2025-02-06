@@ -29,14 +29,22 @@ namespace University.Controllers
                 return RedirectToAction("Index");
             }
 
-            var groups = await _context.Groups
-                .Include(e => e.Teacher)
-                .Include(e => e.Students)
-                .Where(e => e.CourseId == courseId)
-                .OrderBy(e => e.Name)
-                .ToListAsync();
+            var course = await _context.Courses
+                .Where(e => e.Id == courseId)
+                .Include(e => e.Groups)
+                .ThenInclude(e => e.Students)
+                .Include(e => e.Groups)
+                .ThenInclude(e => e.Teacher)
+                .FirstAsync();
 
-            return View(groups);
+            if (course is null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            TempData["CourseId"] = courseId;
+
+            return View(course.Groups.OrderBy(e => e.Name));
         }
 
         public async Task<IActionResult> GroupStudentsAsync(Guid groupId)
@@ -51,6 +59,11 @@ namespace University.Controllers
                 .OrderBy(e => e.LastName)
                 .ThenBy(e => e.FirstName)
                 .ToListAsync();
+
+            if (TempData != null)
+            {
+                ViewBag.CourseId = TempData["CourseId"];
+            }
 
             return View(students);
         }
