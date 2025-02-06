@@ -12,7 +12,7 @@ using University.DataLayer;
 namespace University.Migrations
 {
     [DbContext(typeof(UniversityContext))]
-    [Migration("20250206192103_InitialMigration")]
+    [Migration("20250206194342_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace University.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("University.Models.Course", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Course", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace University.Migrations
                     b.ToTable("COURSES", (string)null);
                 });
 
-            modelBuilder.Entity("University.Models.Group", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Group", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -76,7 +76,7 @@ namespace University.Migrations
                     b.ToTable("GROUPS", (string)null);
                 });
 
-            modelBuilder.Entity("University.Models.Student", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Student", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,7 +104,7 @@ namespace University.Migrations
                     b.ToTable("STUDENTS", (string)null);
                 });
 
-            modelBuilder.Entity("University.Models.Teacher", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Teacher", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,15 +126,15 @@ namespace University.Migrations
                     b.ToTable("TEACHERS", (string)null);
                 });
 
-            modelBuilder.Entity("University.Models.Group", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Group", b =>
                 {
-                    b.HasOne("University.Models.Course", "Course")
+                    b.HasOne("University.DataLayer.Models.Course", "Course")
                         .WithMany("Groups")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("University.Models.Teacher", "Teacher")
+                    b.HasOne("University.DataLayer.Models.Teacher", "Teacher")
                         .WithMany("Groups")
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -145,9 +145,9 @@ namespace University.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("University.Models.Student", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Student", b =>
                 {
-                    b.HasOne("University.Models.Group", "Group")
+                    b.HasOne("University.DataLayer.Models.Group", "Group")
                         .WithMany("Students")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -156,17 +156,17 @@ namespace University.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("University.Models.Course", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Course", b =>
                 {
                     b.Navigation("Groups");
                 });
 
-            modelBuilder.Entity("University.Models.Group", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Group", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("University.Models.Teacher", b =>
+            modelBuilder.Entity("University.DataLayer.Models.Teacher", b =>
                 {
                     b.Navigation("Groups");
                 });
