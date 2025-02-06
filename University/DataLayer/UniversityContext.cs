@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using University.Models;
+using University.DataLayer.Models;
 
 namespace University.DataLayer
 {

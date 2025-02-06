@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University.DataLayer;
-using University.Models;
+using University.DataLayer.Models;
 
 namespace University.Tests
 {

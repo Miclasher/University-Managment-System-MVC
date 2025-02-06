@@ -1,4 +1,4 @@
-namespace University.Models
+namespace University.DataLayer.Models
 {
     public class ErrorViewModel
     {

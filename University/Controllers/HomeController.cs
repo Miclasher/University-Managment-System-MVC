@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using University.DataLayer;
-using University.Models;
+using University.DataLayer.Models;
 
 namespace University.Controllers
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using University.Controllers;
-using University.Models;
+using University.DataLayer.Models;
 
 namespace University.Tests
 {
