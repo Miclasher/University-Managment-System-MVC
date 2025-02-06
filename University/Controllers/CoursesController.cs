@@ -68,6 +68,12 @@ namespace University.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(Course course)
         {
+            if (!await _context.Courses.ContainsAsync(course))
+            {
+                TempData["ErrorMessage"] = "It looks like course was already deleted.";
+                return RedirectToAction("Index");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Courses.Update(course);
@@ -101,7 +107,7 @@ namespace University.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(Course course)
         {
-            if (!_context.Courses.Contains(course))
+            if (!await _context.Courses.ContainsAsync(course))
             {
                 TempData["ErrorMessage"] = "It looks like course was already deleted.";
                 return RedirectToAction("Index");

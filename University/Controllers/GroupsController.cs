@@ -42,18 +42,18 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(Group Group)
+        public async Task<IActionResult> CreateAsync(Group group)
         {
             await LoadViewBagAsync();
 
             if (ModelState.IsValid)
             {
-                _context.Groups.Add(Group);
+                _context.Groups.Add(group);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(Group);
+            return View(group);
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
@@ -77,18 +77,39 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(Group Group)
+        public async Task<IActionResult> EditAsync(Group group)
         {
             await LoadViewBagAsync();
 
+            if (!await _context.Groups.ContainsAsync(group))
+            {
+                TempData["ErrorMessage"] = "It looks like group was already deleted.";
+
+                return RedirectToAction("Index");
+            }
+
+            if (!await _context.Teachers.AnyAsync(e => e.Id == group.TeacherId))
+            {
+                TempData["ErrorMessage"] = "It looks like tutor that you have selected has been already deleted.";
+
+                return RedirectToAction("Index");
+            }
+
+            if (!await _context.Courses.AnyAsync(e => e.Id == group.CourseId))
+            {
+                TempData["ErrorMessage"] = "It looks like course that you have selected has been already deleted.";
+
+                return RedirectToAction("Index");
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Groups.Update(Group);
+                _context.Groups.Update(group);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(Group);
+            return View(group);
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
@@ -114,18 +135,18 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAsync(Group Group)
+        public async Task<IActionResult> DeleteAsync(Group group)
         {
             await LoadViewBagAsync();
 
-            if (!_context.Groups.Contains(Group))
+            if (!await _context.Groups.ContainsAsync(group))
             {
                 TempData["ErrorMessage"] = "It looks like group was already deleted.";
 
                 return RedirectToAction("Index");
             }
 
-            _context.Groups.Remove(Group);
+            _context.Groups.Remove(group);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");

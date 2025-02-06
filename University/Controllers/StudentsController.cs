@@ -41,18 +41,18 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(Student Student)
+        public async Task<IActionResult> CreateAsync(Student student)
         {
             await LoadViewBagAsync();
 
             if (ModelState.IsValid)
             {
-                _context.Students.Add(Student);
+                _context.Students.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(Student);
+            return View(student);
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
@@ -76,19 +76,33 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(Student Student)
+        public async Task<IActionResult> EditAsync(Student student)
         {
             await LoadViewBagAsync();
 
+            if (!await _context.Students.ContainsAsync(student))
+            {
+                TempData["ErrorMessage"] = "It looks like student was already deleted.";
+
+                return RedirectToAction("Index");
+            }
+
+            if (!await _context.Groups.AnyAsync(e => e.Id == student.GroupId))
+            {
+                TempData["ErrorMessage"] = "It looks like group that you have selected has been already deleted.";
+
+                return RedirectToAction("Index");
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Students.Update(Student);
+                _context.Students.Update(student);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
 
-            return View(Student);
+            return View(student);
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
@@ -112,18 +126,18 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAsync(Student Student)
+        public async Task<IActionResult> DeleteAsync(Student student)
         {
             await LoadViewBagAsync();
 
-            if (!_context.Students.Contains(Student))
+            if (!await _context.Students.ContainsAsync(student))
             {
                 TempData["ErrorMessage"] = "It looks like student was already deleted.";
 
                 return RedirectToAction("Index");
             }
 
-            _context.Students.Remove(Student);
+            _context.Students.Remove(student);
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

@@ -36,16 +36,16 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(Teacher Teacher)
+        public async Task<IActionResult> CreateAsync(Teacher teacher)
         {
             if (ModelState.IsValid)
             {
-                _context.Teachers.Add(Teacher);
+                _context.Teachers.Add(teacher);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(Teacher);
+            return View(teacher);
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
@@ -67,17 +67,24 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(Teacher Teacher)
+        public async Task<IActionResult> EditAsync(Teacher teacher)
         {
+            if (!_context.Teachers.Contains(teacher))
+            {
+                TempData["ErrorMessage"] = "It looks like teacher was already deleted.";
+
+                return RedirectToAction("Index");
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Teachers.Update(Teacher);
+                _context.Teachers.Update(teacher);
                 await _context.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
 
-            return View(Teacher);
+            return View(teacher);
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
@@ -101,16 +108,16 @@ namespace University.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAsync(Teacher Teacher)
+        public async Task<IActionResult> DeleteAsync(Teacher teacher)
         {
-            if (!_context.Teachers.Contains(Teacher))
+            if (!_context.Teachers.Contains(teacher))
             {
                 TempData["ErrorMessage"] = "It looks like teacher was already deleted.";
 
                 return RedirectToAction("Index");
             }
 
-            _context.Teachers.Remove(Teacher);
+            _context.Teachers.Remove(teacher);
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
