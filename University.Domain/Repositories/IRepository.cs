@@ -5,8 +5,8 @@ namespace University.Domain.Repositories
     public interface IRepository<TEntity> where TEntity : class
     {
         Task<TEntity> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
-        Task<IQueryable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
-        IQueryable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
+        Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken = default);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
         Task<TEntity> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default);
         Task UpdateAsync(TEntity entity, CancellationToken cancellationToken = default);
         Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);

@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace University.Shared
 {
-    internal class CourseToCreateDTO
+    public class CourseToCreateDTO
     {
         [MinLength(1)]
         [Required(ErrorMessage = "Please enter course name")]
