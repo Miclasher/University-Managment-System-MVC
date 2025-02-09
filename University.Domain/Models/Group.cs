@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace University.Domain.Models
+﻿namespace University.Domain.Models
 {
     public class Group
     {
@@ -10,6 +8,6 @@ namespace University.Domain.Models
         public Course Course { get; set; } = null!;
         public Guid TeacherId { get; set; }
         public Teacher Teacher { get; set; } = null!;
-        public ObservableCollection<Student> Students { get; set; } = new ObservableCollection<Student>();
+        public IEnumerable<Student> Students { get; set; } = new List<Student>();
     }
 }

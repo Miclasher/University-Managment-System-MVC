@@ -1,6 +1,6 @@
 ﻿namespace University.Domain.Repositories
 {
-    public interface IRepositoryWrapper
+    public interface IRepositoryManager
     {
         IGroupRepository Group { get; }
         IStudentRepository Student { get; }

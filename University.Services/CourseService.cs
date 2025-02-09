@@ -8,23 +8,23 @@ namespace University.Services
 {
     internal sealed class CourseService : ICourseService
     {
-        private readonly IRepositoryWrapper _repositoryWrapper;
+        private readonly IRepositoryManager _repositoryManager;
 
-        public CourseService(IRepositoryWrapper repositoryWrapper)
+        public CourseService(IRepositoryManager repositoryManager)
         {
-            _repositoryWrapper = repositoryWrapper;
+            _repositoryManager = repositoryManager;
         }
 
         public async Task<IEnumerable<CourseDTO>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var courses = await _repositoryWrapper.Course.GetAllAsync(cancellationToken);
+            var courses = await _repositoryManager.Course.GetAllAsync(cancellationToken);
 
             return courses.Adapt<IEnumerable<CourseDTO>>();
         }
 
         public async Task<CourseDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var course = await _repositoryWrapper.Course.GetByIdAsync(id, cancellationToken);
+            var course = await _repositoryManager.Course.GetByIdAsync(id, cancellationToken);
 
             if (course is null)
             {
@@ -38,39 +38,40 @@ namespace University.Services
         {
             var newCourse = new Course()
             {
+                Id = Guid.NewGuid(),
                 Name = course.Name,
                 Description = course.Description
             };
 
-            await _repositoryWrapper.Course.AddAsync(newCourse, cancellationToken);
+            await _repositoryManager.Course.AddAsync(newCourse, cancellationToken);
 
-            await _repositoryWrapper.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var course = await _repositoryWrapper.Course.GetByIdAsync(id, cancellationToken);
+            var course = await _repositoryManager.Course.GetByIdAsync(id, cancellationToken);
 
             if (course is null)
             {
                 throw new KeyNotFoundException($"Course with id {id} not found");
             }
 
-            _repositoryWrapper.Course.Remove(course, cancellationToken);
+            _repositoryManager.Course.Remove(course, cancellationToken);
 
-            await _repositoryWrapper.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
 
         public async Task UpdateAsync(CourseToUpdateDTO course, CancellationToken cancellationToken = default)
         {
-            var courseToUpdate = await _repositoryWrapper.Course.GetByIdAsync(course.Id, cancellationToken);
+            var courseToUpdate = await _repositoryManager.Course.GetByIdAsync(course.Id, cancellationToken);
 
             courseToUpdate.Name = course.Name;
             courseToUpdate.Description = course.Description;
 
-            await _repositoryWrapper.Course.UpdateAsync(courseToUpdate, cancellationToken);
+            await _repositoryManager.Course.UpdateAsync(courseToUpdate, cancellationToken);
 
-            await _repositoryWrapper.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace University.Shared
 {
-    public class TeacherToUpdate
+    public class TeacherToUpdateDTO
     {
         [Required]
         public Guid Id { get; set; }
