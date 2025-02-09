@@ -74,7 +74,7 @@ namespace University.Services
             teacherToUpdate.FirstName = teacher.FirstName;
             teacherToUpdate.LastName = teacher.LastName;
 
-            await _repositoryManager.Teacher.UpdateAsync(teacherToUpdate, cancellation);
+            _repositoryManager.Teacher.Update(teacherToUpdate, cancellation);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellation);
         }

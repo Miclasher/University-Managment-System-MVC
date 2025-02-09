@@ -69,7 +69,7 @@ namespace University.Services
             courseToUpdate.Name = course.Name;
             courseToUpdate.Description = course.Description;
 
-            await _repositoryManager.Course.UpdateAsync(courseToUpdate, cancellationToken);
+            _repositoryManager.Course.Update(courseToUpdate, cancellationToken);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }

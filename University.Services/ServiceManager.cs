@@ -3,7 +3,7 @@ using University.Services.Abstractions;
 
 namespace University.Services
 {
-    internal sealed class ServiceManager : IServiceManager
+    public sealed class ServiceManager : IServiceManager
     {
         private readonly Lazy<ICourseService> _lazyCourseService;
         private readonly Lazy<ITeacherService> _lazyTeacherService;

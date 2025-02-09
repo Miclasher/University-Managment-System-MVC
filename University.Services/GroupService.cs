@@ -76,7 +76,7 @@ namespace University.Services
             GroupToUpdate.CourseId = group.CourseId;
             GroupToUpdate.TeacherId = group.TeacherId;
 
-            await _repositoryManager.Group.UpdateAsync(GroupToUpdate, cancellation);
+            _repositoryManager.Group.Update(GroupToUpdate, cancellation);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellation);
         }

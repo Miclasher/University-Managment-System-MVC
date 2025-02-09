@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace University.Shared
 {
@@ -14,6 +12,6 @@ namespace University.Shared
         [MinLength(1)]
         [Required(ErrorMessage = "Please enter course description")]
         public string Description { get; set; } = string.Empty;
-        public ObservableCollection<GroupDTO> Groups { get; set; } = new ObservableCollection<Group>();
+        public IEnumerable<GroupDTO> Groups { get; set; } = new List<GroupDTO>();
     }
 }

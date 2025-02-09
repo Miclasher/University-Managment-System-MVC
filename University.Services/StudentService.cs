@@ -76,7 +76,7 @@ namespace University.Services
             StudentToUpdate.LastName = student.LastName;
             StudentToUpdate.GroupId = student.GroupId;
 
-            await _repositoryManager.Student.UpdateAsync(StudentToUpdate, cancellation);
+            _repositoryManager.Student.Update(StudentToUpdate, cancellation);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellation);
         }
