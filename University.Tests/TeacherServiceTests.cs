@@ -1,7 +1,6 @@
 ﻿using Moq;
 using University.Domain.Models;
 using University.Services;
-using University.Services.Abstractions;
 using University.Shared;
 
 namespace University.Tests

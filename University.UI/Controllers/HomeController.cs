@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Runtime.CompilerServices;
 using University.Services.Abstractions;
 
 namespace University.UI.Controllers

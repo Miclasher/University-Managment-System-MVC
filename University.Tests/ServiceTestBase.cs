@@ -1,6 +1,5 @@
 ﻿using Moq;
 using University.Domain.Repositories;
-using University.Services.Abstractions;
 
 namespace University.Tests
 {

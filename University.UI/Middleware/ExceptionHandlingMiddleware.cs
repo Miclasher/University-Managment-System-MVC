@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Threading.Tasks;
-namespace University.UI.Middleware
+﻿namespace University.UI.Middleware
 {
     public class ExceptionHandlingMiddleware : IMiddleware
     {
