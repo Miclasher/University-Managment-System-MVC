@@ -54,7 +54,7 @@ namespace University.Services
 
             if (course is null)
             {
-                throw new KeyNotFoundException($"Course with id {id} not found");
+                throw new KeyNotFoundException($"Course with id {id} not found. It is possible that someone else deleted this course.");
             }
 
             _repositoryManager.Course.Remove(course, cancellationToken);
@@ -68,7 +68,7 @@ namespace University.Services
 
             if (courseToUpdate is null)
             {
-                throw new KeyNotFoundException($"Course with id {course.Id} not found");
+                throw new KeyNotFoundException($"Course with id {course.Id} not found. It is possible that someone else deleted this course.");
             }
 
             courseToUpdate.Name = course.Name;
@@ -85,7 +85,7 @@ namespace University.Services
 
             if (course is null)
             {
-                throw new KeyNotFoundException($"Course with id {id} not found");
+                throw new KeyNotFoundException($"Course with id {id} not found. It is possible that someone else deleted this course.");
             }
 
             return course.Adapt<CourseDTO>();

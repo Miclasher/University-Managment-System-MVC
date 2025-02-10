@@ -28,7 +28,7 @@ namespace University.Services
 
             if (Group is null)
             {
-                throw new KeyNotFoundException($"Group with id {id} not found");
+                throw new KeyNotFoundException($"Group with id {id} not found. It is possible that someone else deleted this group.");
             }
 
             return Group.Adapt<GroupDTO>();
@@ -55,7 +55,7 @@ namespace University.Services
 
             if (Group is null)
             {
-                throw new KeyNotFoundException($"Group with id {id} not found");
+                throw new KeyNotFoundException($"Group with id {id} not found. It is possible that someone else deleted this group.");
             }
 
             _repositoryManager.Group.Remove(Group, cancellationToken);
@@ -69,7 +69,7 @@ namespace University.Services
 
             if (GroupToUpdate is null)
             {
-                throw new KeyNotFoundException($"Group with id {group.Id} not found");
+                throw new KeyNotFoundException($"Group with id {group.Id} not found. It is possible that someone else deleted this group.");
             }
 
             GroupToUpdate.Name = group.Name;

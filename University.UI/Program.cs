@@ -24,10 +24,7 @@ namespace University.UI
             var config = new ConfigurationBuilder()
                 .AddUserSecrets<HomeController>().Build();
 
-            builder.Services.AddDbContext<UniversityDbContext>(options =>
-            {
-                options.UseSqlServer(config["DbConnectionString"]);
-            });
+            builder.Services.AddDbContext<UniversityDbContext>(options => options.UseSqlServer(config["DbConnectionString"]));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

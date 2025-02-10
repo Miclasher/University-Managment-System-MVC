@@ -28,7 +28,7 @@ namespace University.Services
 
             if (teacher is null)
             {
-                throw new KeyNotFoundException($"Teacher with id {id} not found");
+                throw new KeyNotFoundException($"Teacher with id {id} not found. It is possible that someone else deleted this teacher.");
             }
 
             return teacher.Adapt<TeacherDTO>();
@@ -54,7 +54,7 @@ namespace University.Services
 
             if (teacher is null)
             {
-                throw new KeyNotFoundException($"Teacher with id {id} not found");
+                throw new KeyNotFoundException($"Teacher with id {id} not found. It is possible that someone else deleted this teacher.");
             }
 
             _repositoryManager.Teacher.Remove(teacher, cancellationToken);
@@ -68,7 +68,7 @@ namespace University.Services
 
             if (teacherToUpdate is null)
             {
-                throw new KeyNotFoundException($"Teacher with id {teacher.Id} not found");
+                throw new KeyNotFoundException($"Teacher with id {teacher.Id} not found. It is possible that someone else deleted this teacher.");
             }
 
             teacherToUpdate.FirstName = teacher.FirstName;

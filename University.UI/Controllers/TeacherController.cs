@@ -5,11 +5,11 @@ using University.Shared;
 
 namespace University.UI.Controllers
 {
-    public class CourseController : Controller
+    public class TeacherController : Controller
     {
         private readonly IServiceManager _serviceManager;
 
-        public CourseController(IServiceManager serviceManager)
+        public TeacherController(IServiceManager serviceManager)
         {
             _serviceManager = serviceManager;
         }
@@ -21,9 +21,9 @@ namespace University.UI.Controllers
                 ViewBag.ErrorMessage = errorMessage;
             }
 
-            var courses = await _serviceManager.CourseService.GetAllAsync();
+            var Teachers = await _serviceManager.TeacherService.GetAllAsync();
 
-            return View(courses);
+            return View(Teachers);
         }
 
         public IActionResult Create()
@@ -32,39 +32,39 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(CourseToCreateDTO course)
+        public async Task<IActionResult> CreateAsync(TeacherToCreateDTO Teacher)
         {
-            await _serviceManager.CourseService.CreateAsync(course);
+            await _serviceManager.TeacherService.CreateAsync(Teacher);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var course = await _serviceManager.CourseService.GetByIdAsync(id);
+            var Teacher = await _serviceManager.TeacherService.GetByIdAsync(id);
 
-            return View(course.Adapt<CourseToUpdateDTO>());
+            return View(Teacher.Adapt<TeacherToUpdateDTO>());
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAsync(CourseToUpdateDTO course)
+        public async Task<IActionResult> EditAsync(TeacherToUpdateDTO teacher)
         {
-            await _serviceManager.CourseService.UpdateAsync(course);
+            await _serviceManager.TeacherService.UpdateAsync(teacher);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var course = await _serviceManager.CourseService.GetByIdAsync(id);
+            var Teacher = await _serviceManager.TeacherService.GetByIdAsync(id);
 
-            return View(course);
+            return View(Teacher);
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteAsync(CourseDTO courseToDelete)
+        public async Task<IActionResult> DeleteAsync(TeacherDTO teacherToDelete)
         {
-            await _serviceManager.CourseService.DeleteAsync(courseToDelete.Id);
+            await _serviceManager.TeacherService.DeleteAsync(teacherToDelete.Id);
 
             return RedirectToAction("Index");
         }

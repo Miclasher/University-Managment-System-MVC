@@ -1,0 +1,56 @@
+﻿@model IEnumerable<TeacherDTO>;
+
+@{
+	ViewData["Title"] = "Teacher list";
+}
+
+<div class="container">
+    <div class="row pt-4">
+        <div class="col-6 pb-3">
+            <h2 class="text-start">Teachers list</h2>
+
+            @if (ViewBag.ErrorMessage is not null)
+            {
+                <p class="text-danger">@ViewBag.ErrorMessage</p>
+            }
+        </div>
+        <div class="col-6 text-end">
+            <a asp-action="Create" asp-controller="Teacher" class="btn btn-dark">Create teacher</a>
+        </div>
+    </div>
+    <table class="table table-borderless table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Teacher name
+                </th>
+                <th>
+                    Teacher surname
+                </th>
+                <th>
+                    Actions
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>
+                        @obj.FirstName
+                    </td>
+                    <td>
+                        @obj.LastName
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Teacher" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="Teacher" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
