@@ -18,5 +18,16 @@ namespace University.Infrastructure.Repositories
 
             return course!;
         }
+
+        public async Task<Course> GetCourseWithGroupDetailsByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var course = await _dbSet
+                .Include(c => c.Groups)
+                    .ThenInclude(g => g.Students)
+                .Include(c => c.Groups)
+                    .ThenInclude(g => g.Teacher)
+                .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+            return course!;
+        }
     }
 }

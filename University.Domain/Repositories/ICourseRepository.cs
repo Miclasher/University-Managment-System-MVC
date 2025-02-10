@@ -2,5 +2,8 @@
 
 namespace University.Domain.Repositories
 {
-    public interface ICourseRepository : IRepository<Course>;
+    public interface ICourseRepository : IRepository<Course>
+    {
+        Task<Course> GetCourseWithGroupDetailsByIdAsync(Guid id, CancellationToken cancellationToken);
+    }
 }

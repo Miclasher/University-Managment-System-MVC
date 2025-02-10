@@ -73,5 +73,17 @@ namespace University.Services
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task<CourseDTO> GetCourseWithGroupDetailsByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var course = await _repositoryManager.Course.GetCourseWithGroupDetailsByIdAsync(id, cancellationToken);
+
+            if (course is null)
+            {
+                throw new KeyNotFoundException($"Course with id {id} not found");
+            }
+
+            return course.Adapt<CourseDTO>();
+        }
     }
 }
