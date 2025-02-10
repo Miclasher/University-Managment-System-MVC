@@ -126,6 +126,23 @@ namespace University.Tests
             Assert.IsNotNull(result);
             Assert.AreEqual(courseId, result.Id);
         }
+
+        [TestMethod]
+        public async Task InvalidIdTest()
+        {
+            _mockCourseRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Course)null!);
+
+            var courseToUpdate = new CourseToUpdateDTO
+            {
+                Id = Guid.NewGuid(),
+                Name = "UpdatedCourse",
+                Description = "UpdatedDescription"
+            };
+
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _courseService.DeleteAsync(Guid.NewGuid()));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _courseService.UpdateAsync(courseToUpdate));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _courseService.GetByIdAsync(Guid.NewGuid()));
+        }
     }
 }
-

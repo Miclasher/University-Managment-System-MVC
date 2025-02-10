@@ -152,5 +152,25 @@ namespace University.Tests
             _mockStudentRepository.Verify(repo => repo.RemoveRange(group.Students, It.IsAny<CancellationToken>()), Times.Once);
             _mockRepositoryManager.Verify(repo => repo.UnitOfWork.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
+
+        [TestMethod]
+        public async Task InvalidIdTest()
+        {
+            _mockGroupRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Group)null!);
+
+            var groupToUpdate = new GroupToUpdateDTO
+            {
+                Id = Guid.NewGuid(),
+                Name = "UpdatedGroup",
+                CourseId = Guid.NewGuid(),
+                TeacherId = Guid.NewGuid()
+            };
+
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _groupService.DeleteAsync(Guid.NewGuid()));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _groupService.UpdateAsync(groupToUpdate));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _groupService.ClearGroupAsync(Guid.NewGuid()));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _groupService.GetByIdAsync(Guid.NewGuid()));
+        }
     }
 }

@@ -117,5 +117,25 @@ namespace University.Tests
 
             Assert.IsTrue(result);
         }
+
+        [TestMethod]
+        public async Task InvalidIdTest()
+        {
+            _mockStudentRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Student)null!);
+
+            var studentToUpdate = new StudentToUpdateDTO
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "UpdatedFirstName",
+                LastName = "UpdatedLastName",
+                GroupId = Guid.NewGuid()
+            };
+
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _studentService.DeleteAsync(Guid.NewGuid()));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _studentService.UpdateAsync(studentToUpdate));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _studentService.GetByIdAsync(Guid.NewGuid()));
+        }
+
     }
 }

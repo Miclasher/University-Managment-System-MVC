@@ -1,6 +1,7 @@
 ﻿using Moq;
 using University.Domain.Models;
 using University.Services;
+using University.Services.Abstractions;
 using University.Shared;
 
 namespace University.Tests
@@ -110,6 +111,24 @@ namespace University.Tests
 
             _mockTeacherRepository.Verify(repo => repo.Update(It.IsAny<Teacher>(), It.IsAny<CancellationToken>()), Times.Once);
             _mockRepositoryManager.Verify(repo => repo.UnitOfWork.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [TestMethod]
+        public async Task InvalidIdTest()
+        {
+            _mockTeacherRepository.Setup(repo => repo.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync((Teacher)null!);
+
+            var teacherToUpdate = new TeacherToUpdateDTO
+            {
+                Id = Guid.NewGuid(),
+                FirstName = "UpdatedFirstName",
+                LastName = "UpdatedLastName"
+            };
+
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _teacherService.DeleteAsync(Guid.NewGuid()));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _teacherService.UpdateAsync(teacherToUpdate));
+            await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _teacherService.GetByIdAsync(Guid.NewGuid()));
         }
     }
 }
