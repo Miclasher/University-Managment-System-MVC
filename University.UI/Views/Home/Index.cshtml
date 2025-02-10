@@ -6,6 +6,11 @@
 
 <h1>Main page</h1>
 
+@if (ViewBag.ErrorMessage is not null)
+{
+	<p class="text-danger">@ViewBag.ErrorMessage</p>
+}
+
 <div class="container">
 	@if (!Model.Any())
 	{

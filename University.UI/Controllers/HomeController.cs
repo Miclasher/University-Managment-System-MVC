@@ -13,35 +13,30 @@ namespace University.UI.Controllers
             _serviceManager = serviceManager;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(string errorMessage)
         {
+            if (!string.IsNullOrEmpty(errorMessage))
+            {
+                ViewBag.ErrorMessage = errorMessage;
+            }
+
             var courses = await _serviceManager.CourseService.GetAllAsync();
 
             return View(courses);
         }
 
-        public async Task<IActionResult> CourseGroups(Guid courseId)
+        public async Task<IActionResult> CourseGroupsAsync(Guid courseId)
         {
             var course = await _serviceManager.CourseService.GetCourseWithGroupDetailsByIdAsync(courseId);
-
-            if (course == null)
-            {
-                return RedirectToAction("IndexAsync");
-            }
 
             TempData["CourseId"] = courseId;
 
             return View(course.Groups);
         }
 
-        public async Task<IActionResult> GroupStudents(Guid groupId)
+        public async Task<IActionResult> GroupStudentsAsync(Guid groupId)
         {
             var group = await _serviceManager.GroupService.GetByIdAsync(groupId);
-
-            if (group == null)
-            {
-                return RedirectToAction("IndexAsync");
-            }
 
             if (TempData != null)
             {

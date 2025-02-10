@@ -66,6 +66,11 @@ namespace University.Services
         {
             var courseToUpdate = await _repositoryManager.Course.GetByIdAsync(course.Id, cancellationToken);
 
+            if (courseToUpdate is null)
+            {
+                throw new KeyNotFoundException($"Course with id {course.Id} not found");
+            }
+
             courseToUpdate.Name = course.Name;
             courseToUpdate.Description = course.Description;
 

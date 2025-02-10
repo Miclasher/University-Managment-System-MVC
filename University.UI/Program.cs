@@ -19,6 +19,8 @@ namespace University.UI
 
             builder.Services.AddScoped<IServiceManager, ServiceManager>();
 
+            builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+
             var config = new ConfigurationBuilder()
                 .AddUserSecrets<HomeController>().Build();
 
@@ -40,7 +42,7 @@ namespace University.UI
                 app.UseHsts();
             }
 
-            //app.UseMiddleware<ExceptionHandlingMiddleware>();
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
