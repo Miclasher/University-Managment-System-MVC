@@ -80,5 +80,10 @@ namespace University.Services
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellation);
         }
+
+        public async Task<bool> CanBeCreatedAsync(CancellationToken cancellationToken = default)
+        {
+            return (await _repositoryManager.Group.GetAllAsync(cancellationToken)).Any();
+        }
     }
 }

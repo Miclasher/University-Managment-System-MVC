@@ -57,6 +57,11 @@ namespace University.Services
                 throw new KeyNotFoundException($"Course with id {id} not found. It is possible that someone else deleted this course.");
             }
 
+            if (course.Groups.Any())
+            {
+                throw new InvalidOperationException("Course cannot be deleted because it has groups.");
+            }
+
             _repositoryManager.Course.Remove(course, cancellationToken);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);

@@ -51,14 +51,19 @@ namespace University.Services
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var Group = await _repositoryManager.Group.GetByIdAsync(id, cancellationToken);
+            var group = await _repositoryManager.Group.GetByIdAsync(id, cancellationToken);
 
-            if (Group is null)
+            if (group is null)
             {
                 throw new KeyNotFoundException($"Group with id {id} not found. It is possible that someone else deleted this group.");
             }
 
-            _repositoryManager.Group.Remove(Group, cancellationToken);
+            if (group.Students.Any())
+            {
+                throw new InvalidOperationException("Group cannot be deleted because it has students.");
+            }
+
+            _repositoryManager.Group.Remove(group, cancellationToken);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
@@ -79,6 +84,26 @@ namespace University.Services
             _repositoryManager.Group.Update(GroupToUpdate, cancellation);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellation);
+        }
+
+        public async Task<bool> CanBeCreatedAsync(CancellationToken cancellationToken = default)
+        {
+            return (await _repositoryManager.Course.GetAllAsync(cancellationToken)).Any()
+                && (await _repositoryManager.Teacher.GetAllAsync(cancellationToken)).Any();
+        }
+
+        public async Task ClearGroupAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            var group = await _repositoryManager.Group.GetByIdAsync(id, cancellationToken);
+
+            if (group is null)
+            {
+                throw new KeyNotFoundException($"Group with id {id} not found. It is possible that someone else deleted this group.");
+            }
+
+            _repositoryManager.Student.RemoveRange(group.Students, cancellationToken);
+
+            await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
     }
 }

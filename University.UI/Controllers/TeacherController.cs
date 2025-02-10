@@ -32,9 +32,9 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(TeacherToCreateDTO Teacher)
+        public async Task<IActionResult> CreateAsync(TeacherToCreateDTO teacher)
         {
-            await _serviceManager.TeacherService.CreateAsync(Teacher);
+            await _serviceManager.TeacherService.CreateAsync(teacher);
 
             return RedirectToAction("Index");
         }

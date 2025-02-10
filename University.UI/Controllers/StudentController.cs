@@ -5,11 +5,11 @@ using University.Shared;
 
 namespace University.UI.Controllers
 {
-    public class GroupController : Controller
+    public class StudentController : Controller
     {
         private readonly IServiceManager _serviceManager;
 
-        public GroupController(IServiceManager serviceManager)
+        public StudentController(IServiceManager serviceManager)
         {
             _serviceManager = serviceManager;
         }
@@ -21,14 +21,14 @@ namespace University.UI.Controllers
                 ViewBag.ErrorMessage = errorMessage;
             }
 
-            if (await _serviceManager.GroupService.CanBeCreatedAsync())
+            if (await _serviceManager.StudentService.CanBeCreatedAsync())
             {
                 ViewData["CanBeCreated"] = true;
             }
 
-            var Groups = await _serviceManager.GroupService.GetAllAsync();
+            var Students = await _serviceManager.StudentService.GetAllAsync();
 
-            return View(Groups);
+            return View(Students);
         }
 
         public async Task<IActionResult> CreateAsync()
@@ -39,9 +39,9 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync(GroupToCreateDTO Group)
+        public async Task<IActionResult> CreateAsync(StudentToCreateDTO student)
         {
-            await _serviceManager.GroupService.CreateAsync(Group);
+            await _serviceManager.StudentService.CreateAsync(student);
 
             await LoadViewBagAsync();
 
@@ -50,55 +50,47 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var Group = await _serviceManager.GroupService.GetByIdAsync(id);
+            var Student = await _serviceManager.StudentService.GetByIdAsync(id);
 
             await LoadViewBagAsync();
 
-            return View(Group.Adapt<GroupToUpdateDTO>());
+            return View(Student.Adapt<StudentToUpdateDTO>());
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditAsync(GroupToUpdateDTO Group)
+        public async Task<IActionResult> EditAsync(StudentToUpdateDTO student)
         {
             await LoadViewBagAsync();
 
-            await _serviceManager.GroupService.UpdateAsync(Group);
+            await _serviceManager.StudentService.UpdateAsync(student);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var Group = await _serviceManager.GroupService.GetByIdAsync(id);
+            var Student = await _serviceManager.StudentService.GetByIdAsync(id);
 
             await LoadViewBagAsync();
 
-            return View(Group);
+            return View(Student);
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteAsync(GroupDTO GroupToDelete)
+        public async Task<IActionResult> DeleteAsync(StudentDTO studentToDelete)
         {
             await LoadViewBagAsync();
 
-            await _serviceManager.GroupService.DeleteAsync(GroupToDelete.Id);
-
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> ClearGroupAsync(Guid id)
-        {
-            await _serviceManager.GroupService.ClearGroupAsync(id);
+            await _serviceManager.StudentService.DeleteAsync(studentToDelete.Id);
 
             return RedirectToAction("Index");
         }
 
         private async Task LoadViewBagAsync()
         {
-            await _serviceManager.ViewDataService.LoadViewDataForGroups(ViewData);
+            await _serviceManager.ViewDataService.LoadViewDataForStudents(ViewData);
 
-            ViewBag.Courses = ViewData["Courses"];
-            ViewBag.Teachers = ViewData["Teachers"];
+            ViewBag.Groups = ViewData["Groups"];
         }
     }
 }

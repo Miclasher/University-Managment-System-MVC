@@ -57,6 +57,11 @@ namespace University.Services
                 throw new KeyNotFoundException($"Teacher with id {id} not found. It is possible that someone else deleted this teacher.");
             }
 
+            if (teacher.Groups.Any())
+            {
+                throw new InvalidOperationException("Teacher with cannot be deleted because it has groups.");
+            }
+
             _repositoryManager.Teacher.Remove(teacher, cancellationToken);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);

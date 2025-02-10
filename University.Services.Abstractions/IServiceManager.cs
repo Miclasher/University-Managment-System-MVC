@@ -6,5 +6,6 @@
         public ITeacherService TeacherService { get; }
         public IGroupService GroupService { get; }
         public IStudentService StudentService { get; }
+        public IViewDataService ViewDataService { get; }
     }
 }

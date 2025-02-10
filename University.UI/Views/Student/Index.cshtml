@@ -1,0 +1,70 @@
+﻿@model IEnumerable<StudentDTO>;
+
+@{
+	ViewData["Title"] = "Student list";
+	var canBeCreated = (bool?)ViewData["CanBeCreated"] ?? false;
+}
+
+<div class="container">
+    <div class="row pt-4">
+        <div class="col-6 pb-3">
+            <h2 class="text-start">Students list</h2>
+
+            @if (ViewBag.ErrorMessage is not null)
+            {
+                <p class="text-danger">@ViewBag.ErrorMessage</p>
+            }
+        </div>
+        <div class="col-6 text-end">
+			@if (canBeCreated)
+			{
+                <a asp-action="Create" asp-controller="Student" class="btn btn-dark">Create Student</a>
+			}
+			else
+			{
+				<p class="text-danger">Please add groups to create student</p>
+			}
+        </div>
+    </div>
+    <table class="table table-borderless table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Student name
+                </th>
+                <th>
+                    Student surname
+                </th>
+                <th>
+                    Student group
+                </th>
+                <th>
+                    Actions
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>
+                        @obj.FirstName
+                    </td>
+                    <td>
+                        @obj.LastName
+                    </td>
+                    <td>
+						@obj.Group.Name
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-controller="Student" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="Delete" asp-controller="Student" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -9,6 +9,7 @@ namespace University.Services
         private readonly Lazy<ITeacherService> _lazyTeacherService;
         private readonly Lazy<IStudentService> _lazyStudentService;
         private readonly Lazy<IGroupService> _lazyGroupService;
+        private readonly Lazy<IViewDataService> _lazyViewDataService;
 
         public ServiceManager(IRepositoryManager repositoryManager)
         {
@@ -16,6 +17,7 @@ namespace University.Services
             _lazyTeacherService = new Lazy<ITeacherService>(() => new TeacherService(repositoryManager));
             _lazyStudentService = new Lazy<IStudentService>(() => new StudentService(repositoryManager));
             _lazyGroupService = new Lazy<IGroupService>(() => new GroupService(repositoryManager));
+            _lazyViewDataService = new Lazy<IViewDataService>(() => new ViewDataService(repositoryManager));
         }
 
         public ICourseService CourseService => _lazyCourseService.Value;
@@ -25,5 +27,7 @@ namespace University.Services
         public IStudentService StudentService => _lazyStudentService.Value;
 
         public IGroupService GroupService => _lazyGroupService.Value;
+
+        public IViewDataService ViewDataService => _lazyViewDataService.Value;
     }
 }

@@ -20,5 +20,16 @@ namespace University.Infrastructure.Repositories
 
             return group!;
         }
+
+        public async override Task<IEnumerable<Group>> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            var groups = await _dbSet
+                 .Include(g => g.Course)
+                .Include(g => g.Teacher)
+                .Include(g => g.Students)
+                .ToListAsync(cancellationToken);
+
+            return groups;
+        }
     }
 }

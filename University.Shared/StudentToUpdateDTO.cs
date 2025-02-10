@@ -15,6 +15,7 @@ namespace University.Shared
         [Required(ErrorMessage = "Please enter student's surname")]
         public string LastName { get; set; } = string.Empty;
         [Required(ErrorMessage = "Please select a group")]
+        [DisplayName("Group")]
         public Guid GroupId { get; set; }
     }
 }
