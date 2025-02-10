@@ -4,7 +4,7 @@ using University.Shared;
 
 namespace University.Services
 {
-    internal static class MaplerConfiguration
+    public static class MapsterConfiguration
     {
         public static void Configure()
         {
