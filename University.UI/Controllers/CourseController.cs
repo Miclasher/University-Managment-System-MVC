@@ -32,6 +32,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(CourseToCreateDTO course)
         {
             await _serviceManager.CourseService.CreateAsync(course);
@@ -47,6 +48,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(CourseToUpdateDTO course)
         {
             await _serviceManager.CourseService.UpdateAsync(course);
@@ -62,6 +64,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(CourseDTO courseToDelete)
         {
             await _serviceManager.CourseService.DeleteAsync(courseToDelete.Id);

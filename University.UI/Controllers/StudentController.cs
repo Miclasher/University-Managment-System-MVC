@@ -39,6 +39,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(StudentToCreateDTO student)
         {
             await _serviceManager.StudentService.CreateAsync(student);
@@ -58,6 +59,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(StudentToUpdateDTO student)
         {
             await LoadViewBagAsync();
@@ -77,6 +79,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(StudentDTO studentToDelete)
         {
             await LoadViewBagAsync();

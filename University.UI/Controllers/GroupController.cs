@@ -39,6 +39,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(GroupToCreateDTO Group)
         {
             await _serviceManager.GroupService.CreateAsync(Group);
@@ -58,6 +59,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(GroupToUpdateDTO Group)
         {
             await LoadViewBagAsync();
@@ -77,6 +79,7 @@ namespace University.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(GroupDTO GroupToDelete)
         {
             await LoadViewBagAsync();
