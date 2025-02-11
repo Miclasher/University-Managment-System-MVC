@@ -7,11 +7,11 @@ namespace University.UI.Controllers
 {
     public class CourseController : Controller
     {
-        private readonly IServiceManager _serviceManager;
+        private readonly ICourseService _courseService;
 
-        public CourseController(IServiceManager serviceManager)
+        public CourseController(ICourseService courseService)
         {
-            _serviceManager = serviceManager;
+            _courseService = courseService;
         }
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
@@ -21,7 +21,7 @@ namespace University.UI.Controllers
                 ViewBag.ErrorMessage = errorMessage;
             }
 
-            var courses = await _serviceManager.CourseService.GetAllAsync();
+            var courses = await _courseService.GetAllAsync();
 
             return View(courses);
         }
@@ -35,14 +35,14 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(CourseToCreateDTO course)
         {
-            await _serviceManager.CourseService.CreateAsync(course);
+            await _courseService.CreateAsync(course);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var course = await _serviceManager.CourseService.GetByIdAsync(id);
+            var course = await _courseService.GetByIdAsync(id);
 
             return View(course.Adapt<CourseToUpdateDTO>());
         }
@@ -51,14 +51,14 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(CourseToUpdateDTO course)
         {
-            await _serviceManager.CourseService.UpdateAsync(course);
+            await _courseService.UpdateAsync(course);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var course = await _serviceManager.CourseService.GetByIdAsync(id);
+            var course = await _courseService.GetByIdAsync(id);
 
             return View(course);
         }
@@ -67,7 +67,7 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(CourseDTO courseToDelete)
         {
-            await _serviceManager.CourseService.DeleteAsync(courseToDelete.Id);
+            await _courseService.DeleteAsync(courseToDelete.Id);
 
             return RedirectToAction("Index");
         }

@@ -7,11 +7,13 @@ namespace University.UI.Controllers
 {
     public class StudentController : Controller
     {
-        private readonly IServiceManager _serviceManager;
+        private readonly IStudentService _studentService;
+        private readonly IViewDataService _viewDataService;
 
-        public StudentController(IServiceManager serviceManager)
+        public StudentController(IStudentService studentService, IViewDataService viewDataService)
         {
-            _serviceManager = serviceManager;
+            _studentService = studentService;
+            _viewDataService = viewDataService;
         }
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
@@ -21,12 +23,12 @@ namespace University.UI.Controllers
                 ViewBag.ErrorMessage = errorMessage;
             }
 
-            if (await _serviceManager.StudentService.CanBeCreatedAsync())
+            if (await _studentService.CanBeCreatedAsync())
             {
                 ViewData["CanBeCreated"] = true;
             }
 
-            var Students = await _serviceManager.StudentService.GetAllAsync();
+            var Students = await _studentService.GetAllAsync();
 
             return View(Students);
         }
@@ -42,7 +44,7 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(StudentToCreateDTO student)
         {
-            await _serviceManager.StudentService.CreateAsync(student);
+            await _studentService.CreateAsync(student);
 
             await LoadViewBagAsync();
 
@@ -51,7 +53,7 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var Student = await _serviceManager.StudentService.GetByIdAsync(id);
+            var Student = await _studentService.GetByIdAsync(id);
 
             await LoadViewBagAsync();
 
@@ -64,14 +66,14 @@ namespace University.UI.Controllers
         {
             await LoadViewBagAsync();
 
-            await _serviceManager.StudentService.UpdateAsync(student);
+            await _studentService.UpdateAsync(student);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var Student = await _serviceManager.StudentService.GetByIdAsync(id);
+            var Student = await _studentService.GetByIdAsync(id);
 
             await LoadViewBagAsync();
 
@@ -84,14 +86,14 @@ namespace University.UI.Controllers
         {
             await LoadViewBagAsync();
 
-            await _serviceManager.StudentService.DeleteAsync(studentToDelete.Id);
+            await _studentService.DeleteAsync(studentToDelete.Id);
 
             return RedirectToAction("Index");
         }
 
         private async Task LoadViewBagAsync()
         {
-            await _serviceManager.ViewDataService.LoadViewDataForStudents(ViewData);
+            await _viewDataService.LoadViewDataForStudents(ViewData);
 
             ViewBag.Groups = ViewData["Groups"];
         }

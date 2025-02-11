@@ -6,7 +6,7 @@ using University.Shared;
 
 namespace University.Services
 {
-    internal sealed class TeacherService : ITeacherService
+    public sealed class TeacherService : ITeacherService
     {
         private readonly IRepositoryManager _repositoryManager;
 

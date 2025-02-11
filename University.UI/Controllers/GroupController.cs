@@ -7,11 +7,13 @@ namespace University.UI.Controllers
 {
     public class GroupController : Controller
     {
-        private readonly IServiceManager _serviceManager;
+        private readonly IGroupService _groupService;
+        private readonly IViewDataService _viewDataService;
 
-        public GroupController(IServiceManager serviceManager)
+        public GroupController(IGroupService groupService, IViewDataService viewDataService)
         {
-            _serviceManager = serviceManager;
+            _groupService = groupService;
+            _viewDataService = viewDataService;
         }
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
@@ -21,12 +23,12 @@ namespace University.UI.Controllers
                 ViewBag.ErrorMessage = errorMessage;
             }
 
-            if (await _serviceManager.GroupService.CanBeCreatedAsync())
+            if (await _groupService.CanBeCreatedAsync())
             {
                 ViewData["CanBeCreated"] = true;
             }
 
-            var Groups = await _serviceManager.GroupService.GetAllAsync();
+            var Groups = await _groupService.GetAllAsync();
 
             return View(Groups);
         }
@@ -42,7 +44,7 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(GroupToCreateDTO Group)
         {
-            await _serviceManager.GroupService.CreateAsync(Group);
+            await _groupService.CreateAsync(Group);
 
             await LoadViewBagAsync();
 
@@ -51,7 +53,7 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var Group = await _serviceManager.GroupService.GetByIdAsync(id);
+            var Group = await _groupService.GetByIdAsync(id);
 
             await LoadViewBagAsync();
 
@@ -64,14 +66,14 @@ namespace University.UI.Controllers
         {
             await LoadViewBagAsync();
 
-            await _serviceManager.GroupService.UpdateAsync(Group);
+            await _groupService.UpdateAsync(Group);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var Group = await _serviceManager.GroupService.GetByIdAsync(id);
+            var Group = await _groupService.GetByIdAsync(id);
 
             await LoadViewBagAsync();
 
@@ -84,21 +86,21 @@ namespace University.UI.Controllers
         {
             await LoadViewBagAsync();
 
-            await _serviceManager.GroupService.DeleteAsync(GroupToDelete.Id);
+            await _groupService.DeleteAsync(GroupToDelete.Id);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> ClearGroupAsync(Guid id)
         {
-            await _serviceManager.GroupService.ClearGroupAsync(id);
+            await _groupService.ClearGroupAsync(id);
 
             return RedirectToAction("Index");
         }
 
         private async Task LoadViewBagAsync()
         {
-            await _serviceManager.ViewDataService.LoadViewDataForGroups(ViewData);
+            await _viewDataService.LoadViewDataForGroups(ViewData);
 
             ViewBag.Courses = ViewData["Courses"];
             ViewBag.Teachers = ViewData["Teachers"];

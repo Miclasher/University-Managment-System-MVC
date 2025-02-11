@@ -7,11 +7,11 @@ namespace University.UI.Controllers
 {
     public class TeacherController : Controller
     {
-        private readonly IServiceManager _serviceManager;
+        private readonly ITeacherService _teacherService;
 
-        public TeacherController(IServiceManager serviceManager)
+        public TeacherController(ITeacherService teacherService)
         {
-            _serviceManager = serviceManager;
+            _teacherService = teacherService;
         }
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
@@ -21,7 +21,7 @@ namespace University.UI.Controllers
                 ViewBag.ErrorMessage = errorMessage;
             }
 
-            var Teachers = await _serviceManager.TeacherService.GetAllAsync();
+            var Teachers = await _teacherService.GetAllAsync();
 
             return View(Teachers);
         }
@@ -35,14 +35,14 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(TeacherToCreateDTO teacher)
         {
-            await _serviceManager.TeacherService.CreateAsync(teacher);
+            await _teacherService.CreateAsync(teacher);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var Teacher = await _serviceManager.TeacherService.GetByIdAsync(id);
+            var Teacher = await _teacherService.GetByIdAsync(id);
 
             return View(Teacher.Adapt<TeacherToUpdateDTO>());
         }
@@ -51,14 +51,14 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(TeacherToUpdateDTO teacher)
         {
-            await _serviceManager.TeacherService.UpdateAsync(teacher);
+            await _teacherService.UpdateAsync(teacher);
 
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var Teacher = await _serviceManager.TeacherService.GetByIdAsync(id);
+            var Teacher = await _teacherService.GetByIdAsync(id);
 
             return View(Teacher);
         }
@@ -67,7 +67,7 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(TeacherDTO teacherToDelete)
         {
-            await _serviceManager.TeacherService.DeleteAsync(teacherToDelete.Id);
+            await _teacherService.DeleteAsync(teacherToDelete.Id);
 
             return RedirectToAction("Index");
         }

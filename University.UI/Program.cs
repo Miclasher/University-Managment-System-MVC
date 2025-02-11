@@ -19,7 +19,11 @@ namespace University.UI
 
             builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
 
-            builder.Services.AddScoped<IServiceManager, ServiceManager>();
+            builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddScoped<ICourseService, CourseService>();
+            builder.Services.AddScoped<ITeacherService, TeacherService>();
+            builder.Services.AddScoped<IGroupService, GroupService>();
+            builder.Services.AddScoped<IViewDataService, ViewDataService>();
 
             builder.Services.AddTransient<ExceptionHandlingMiddleware>();
 

@@ -6,7 +6,7 @@ using University.Shared;
 
 namespace University.Services
 {
-    internal sealed class ViewDataService : IViewDataService
+    public sealed class ViewDataService : IViewDataService
     {
         private readonly IRepositoryManager _repositoryManager;
 

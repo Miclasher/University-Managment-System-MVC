@@ -5,11 +5,13 @@ namespace University.UI.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IServiceManager _serviceManager;
+        private readonly IGroupService _groupService;
+        private readonly ICourseService _courseService;
 
-        public HomeController(IServiceManager serviceManager)
+        public HomeController(IGroupService groupService, ICourseService courseService)
         {
-            _serviceManager = serviceManager;
+            _groupService = groupService;
+            _courseService = courseService;
         }
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
@@ -19,14 +21,14 @@ namespace University.UI.Controllers
                 ViewBag.ErrorMessage = errorMessage;
             }
 
-            var courses = await _serviceManager.CourseService.GetAllAsync();
+            var courses = await _courseService.GetAllAsync();
 
             return View(courses);
         }
 
         public async Task<IActionResult> CourseGroupsAsync(Guid courseId)
         {
-            var course = await _serviceManager.CourseService.GetCourseWithGroupDetailsByIdAsync(courseId);
+            var course = await _courseService.GetCourseWithGroupDetailsByIdAsync(courseId);
 
             TempData["CourseId"] = courseId;
 
@@ -35,7 +37,7 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> GroupStudentsAsync(Guid groupId)
         {
-            var group = await _serviceManager.GroupService.GetByIdAsync(groupId);
+            var group = await _groupService.GetByIdAsync(groupId);
 
             if (TempData != null)
             {
