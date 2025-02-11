@@ -38,12 +38,7 @@ namespace University.Services
         {
             ArgumentNullException.ThrowIfNull(teacher, nameof(teacher));
 
-            var newTeacher = new Teacher()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = teacher.FirstName,
-                LastName = teacher.LastName
-            };
+            var newTeacher = teacher.Adapt<Teacher>();
 
             await _repositoryManager.Teacher.AddAsync(newTeacher, cancellationToken);
 

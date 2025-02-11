@@ -38,12 +38,7 @@ namespace University.Services
         {
             ArgumentNullException.ThrowIfNull(course, nameof(course));
 
-            var newCourse = new Course()
-            {
-                Id = Guid.NewGuid(),
-                Name = course.Name,
-                Description = course.Description
-            };
+            var newCourse = course.Adapt<Course>();
 
             await _repositoryManager.Course.AddAsync(newCourse, cancellationToken);
 

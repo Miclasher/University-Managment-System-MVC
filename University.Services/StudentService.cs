@@ -38,13 +38,7 @@ namespace University.Services
         {
             ArgumentNullException.ThrowIfNull(student, nameof(student));
 
-            var newStudent = new Student()
-            {
-                Id = Guid.NewGuid(),
-                FirstName = student.FirstName,
-                LastName = student.LastName,
-                GroupId = student.GroupId
-            };
+            var newStudent = student.Adapt<Student>();
 
             await _repositoryManager.Student.AddAsync(newStudent, cancellationToken);
 
