@@ -4,7 +4,7 @@ using University.Domain.Repositories;
 
 namespace University.Infrastructure.Repositories
 {
-    internal class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    internal abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
         protected readonly DbContext _context;
         protected readonly DbSet<TEntity> _dbSet;

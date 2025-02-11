@@ -17,11 +17,15 @@ namespace University.Services
 
         public async Task LoadViewDataForStudents(ViewDataDictionary viewData)
         {
+            ArgumentNullException.ThrowIfNull(viewData, nameof(viewData));
+
             viewData["Groups"] = (await _repositoryManager.Group.GetAllAsync()).Adapt<IEnumerable<GroupDTO>>();
         }
 
         public async Task LoadViewDataForGroups(ViewDataDictionary viewData)
         {
+            ArgumentNullException.ThrowIfNull(viewData, nameof(viewData));
+
             viewData["Courses"] = (await _repositoryManager.Course.GetAllAsync()).Adapt<IEnumerable<CourseDTO>>();
             viewData["Teachers"] = (await _repositoryManager.Teacher.GetAllAsync()).Adapt<IEnumerable<TeacherDTO>>();
         }

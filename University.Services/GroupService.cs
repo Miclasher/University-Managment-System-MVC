@@ -36,13 +36,9 @@ namespace University.Services
 
         public async Task CreateAsync(GroupToCreateDTO group, CancellationToken cancellationToken = default)
         {
-            var newGroup = new Group()
-            {
-                Id = Guid.NewGuid(),
-                Name = group.Name,
-                CourseId = group.CourseId,
-                TeacherId = group.TeacherId
-            };
+            ArgumentNullException.ThrowIfNull(group, nameof(group));
+
+            var newGroup = group.Adapt<Group>();
 
             await _repositoryManager.Group.AddAsync(newGroup, cancellationToken);
 
@@ -70,6 +66,8 @@ namespace University.Services
 
         public async Task UpdateAsync(GroupToUpdateDTO group, CancellationToken cancellation = default)
         {
+            ArgumentNullException.ThrowIfNull(group, nameof(group));
+
             var GroupToUpdate = await _repositoryManager.Group.GetByIdAsync(group.Id, cancellation);
 
             if (GroupToUpdate is null)
@@ -101,7 +99,7 @@ namespace University.Services
                 throw new KeyNotFoundException($"Group with id {id} not found. It is possible that someone else deleted this group.");
             }
 
-            _repositoryManager.Student.RemoveRange(group.Students, cancellationToken);
+            await _repositoryManager.Group.DeleteStudentsFromGroup(id, cancellationToken);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }

@@ -31,5 +31,16 @@ namespace University.Infrastructure.Repositories
 
             return groups;
         }
+
+        public async Task DeleteStudentsFromGroup(Guid id, CancellationToken cancellationToken = default)
+        {
+            var studentsDbSet = _context.Set<Student>();
+
+            var students = await studentsDbSet
+                .Where(s => s.GroupId == id)
+                .ToListAsync(cancellationToken);
+
+            studentsDbSet.RemoveRange(students);
+        }
     }
 }

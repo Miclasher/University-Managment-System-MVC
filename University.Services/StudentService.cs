@@ -36,6 +36,8 @@ namespace University.Services
 
         public async Task CreateAsync(StudentToCreateDTO student, CancellationToken cancellationToken = default)
         {
+            ArgumentNullException.ThrowIfNull(student, nameof(student));
+
             var newStudent = new Student()
             {
                 Id = Guid.NewGuid(),
@@ -65,6 +67,8 @@ namespace University.Services
 
         public async Task UpdateAsync(StudentToUpdateDTO student, CancellationToken cancellation = default)
         {
+            ArgumentNullException.ThrowIfNull(student, nameof(student));
+
             var StudentToUpdate = await _repositoryManager.Student.GetByIdAsync(student.Id, cancellation);
 
             if (StudentToUpdate is null)
