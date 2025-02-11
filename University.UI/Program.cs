@@ -13,8 +13,6 @@ namespace University.UI
     {
         public static void Main(string[] args)
         {
-            MapsterConfiguration.Configure();
-
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddScoped<IRepositoryManager, RepositoryManager>();
