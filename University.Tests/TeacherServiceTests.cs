@@ -1,6 +1,7 @@
 ﻿using Moq;
 using University.Domain.Models;
 using University.Services;
+using University.Services.Abstractions;
 using University.Shared;
 
 namespace University.Tests
@@ -128,6 +129,13 @@ namespace University.Tests
             await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _teacherService.DeleteAsync(Guid.NewGuid()));
             await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _teacherService.UpdateAsync(teacherToUpdate));
             await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _teacherService.GetByIdAsync(Guid.NewGuid()));
+        }
+
+        [TestMethod]
+        public async Task ArgumentNullTest()
+        {
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => _teacherService.CreateAsync(null!));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => _teacherService.UpdateAsync(null!));
         }
     }
 }

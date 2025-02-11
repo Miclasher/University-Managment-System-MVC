@@ -144,5 +144,12 @@ namespace University.Tests
             await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _courseService.UpdateAsync(courseToUpdate));
             await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _courseService.GetByIdAsync(Guid.NewGuid()));
         }
+
+        [TestMethod]
+        public async Task ArgumentNullTest()
+        {
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => _courseService.CreateAsync(null!));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => _courseService.UpdateAsync(null!));
+        }
     }
 }

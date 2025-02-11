@@ -1,6 +1,7 @@
 ﻿using Moq;
 using University.Domain.Models;
 using University.Services;
+using University.Services.Abstractions;
 using University.Shared;
 
 namespace University.Tests
@@ -149,7 +150,7 @@ namespace University.Tests
 
             await _groupService.ClearGroupAsync(groupId);
 
-            _mockStudentRepository.Verify(repo => repo.RemoveRange(group.Students, It.IsAny<CancellationToken>()), Times.Once);
+            _mockGroupRepository.Verify(repo => repo.DeleteStudentsFromGroup(It.IsAny<Guid>(), It.IsAny<CancellationToken>()), Times.Once);
             _mockRepositoryManager.Verify(repo => repo.UnitOfWork.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
         }
 
@@ -171,6 +172,13 @@ namespace University.Tests
             await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _groupService.UpdateAsync(groupToUpdate));
             await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _groupService.ClearGroupAsync(Guid.NewGuid()));
             await Assert.ThrowsExceptionAsync<KeyNotFoundException>(() => _groupService.GetByIdAsync(Guid.NewGuid()));
+        }
+        
+        [TestMethod]
+        public async Task ArgumentNullTest()
+        {
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => _groupService.CreateAsync(null!));
+            await Assert.ThrowsExceptionAsync<ArgumentNullException>(() => _groupService.UpdateAsync(null!));
         }
     }
 }
