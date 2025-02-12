@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using University.Services.Abstractions;
 using University.Shared;
+using University.UI.ViewModels;
 
 namespace University.UI.Controllers
 {
@@ -16,14 +17,16 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
         {
+            var viewModel = new TeacherIndexViewModel();
+
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                ViewBag.ErrorMessage = errorMessage;
+                viewModel.ErrorMessage = errorMessage;
             }
 
-            var Teachers = await _teacherService.GetAllAsync();
+            viewModel.Teachers = await _teacherService.GetAllAsync();
 
-            return View(Teachers);
+            return View(viewModel);
         }
 
         public IActionResult Create()

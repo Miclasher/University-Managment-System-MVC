@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TeacherDTO>;
+﻿@model TeacherIndexViewModel;
 
 @{
 	ViewData["Title"] = "Teacher list";
@@ -9,9 +9,9 @@
         <div class="col-6 pb-3">
             <h2 class="text-start">Teachers list</h2>
 
-            @if (ViewBag.ErrorMessage is not null)
+            @if (Model.ErrorMessage is not null)
             {
-                <p class="text-danger">@ViewBag.ErrorMessage</p>
+                <p class="text-danger">Model.ErrorMessage</p>
             }
         </div>
         <div class="col-6 text-end">
@@ -34,20 +34,20 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var obj in Model)
+            @foreach (var teacher in Model.Teachers)
             {
                 <tr>
                     <td>
-                        @obj.FirstName
+                        @teacher.FirstName
                     </td>
                     <td>
-                        @obj.LastName
+                        @teacher.LastName
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-controller="Teacher" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
+                        <a asp-action="Edit" asp-controller="Teacher" asp-route-id="@teacher.Id" class="btn btn-dark">Edit</a>
                     </td>
                     <td>
-                        <a asp-action="Delete" asp-controller="Teacher" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Delete" asp-controller="Teacher" asp-route-id="@teacher.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
             }

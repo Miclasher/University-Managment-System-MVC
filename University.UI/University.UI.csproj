@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <Folder Include="ViewModels\Group\" />
-    <Folder Include="ViewModels\Teacher\" />
   </ItemGroup>
 
 </Project>
