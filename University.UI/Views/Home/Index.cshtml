@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CourseDTO>
+﻿@model HomeIndexViewModel
 
 @{
 	ViewData["Title"] = "Courses";
@@ -6,13 +6,13 @@
 
 <h1>Main page</h1>
 
-@if (ViewBag.ErrorMessage is not null)
+@if (Model.ErrorMessage is not null)
 {
-	<p class="text-danger">@ViewBag.ErrorMessage</p>
+	<p class="text-danger">@Model.ErrorMessage</p>
 }
 
 <div class="container">
-	@if (!Model.Any())
+	@if (!Model.Courses.Any())
 	{
 		<br/>
 		<p class="h5">No courses found. You can add them using <a class="link-dark" asp-controller="Courses" asp-action="Index">course page</a>.</p>
@@ -33,7 +33,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var course in Model)
+				@foreach (var course in Model.Courses)
 				{
 					<tr>
 						<td>

@@ -17,14 +17,16 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
         {
+            var viewModel = new HomeIndexViewModel();
+
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                ViewBag.ErrorMessage = errorMessage;
+                viewModel.ErrorMessage = errorMessage;
             }
 
-            var courses = await _courseService.GetAllAsync();
+            viewModel.Courses = await _courseService.GetAllAsync();
 
-            return View(courses);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> CourseGroupsAsync(Guid courseId)

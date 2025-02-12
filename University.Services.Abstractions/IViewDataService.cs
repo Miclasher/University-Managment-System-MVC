@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using University.Shared;
+﻿using University.Shared;
 
 namespace University.Services.Abstractions
 {

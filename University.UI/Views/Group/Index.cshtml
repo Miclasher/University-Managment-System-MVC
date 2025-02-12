@@ -1,8 +1,7 @@
-﻿@model IEnumerable<GroupDTO>;
+﻿@model GroupIndexViewModel;
 
 @{
 	ViewData["Title"] = "Group list";
-	bool canBeCreated = (bool?)ViewData["CanBeCreated"] ?? false;
 }
 
 <div class="container">
@@ -10,13 +9,13 @@
 		<div class="col-6 pb-3">
 			<h2 class="text-start">Groups list</h2>
 
-			@if (ViewBag.ErrorMessage is not null)
+			@if (Model.ErrorMessage is not null)
 			{
-				<p class="text-danger">@ViewBag.ErrorMessage</p>
+				<p class="text-danger">@Model.ErrorMessage</p>
 			}
 		</div>
 		<div class="col-6 text-end">
-			@if (canBeCreated)
+			@if (Model.CanBeCreated)
 			{
 				<a asp-action="Create" asp-controller="Group" class="btn btn-dark">Create Group</a>
 			}
@@ -46,26 +45,26 @@
 			</tr>
 		</thead>
 		<tbody>
-			@foreach (var obj in Model)
+			@foreach (var group in Model.Groups)
 			{
 				<tr>
 					<td>
-						@obj.Name
+						@group.Name
 					</td>
 					<td>
-						@obj.Teacher.FullName
+						@group.Teacher.FullName
 					</td>
 					<td>
-						@obj.Students.Count()
+						@group.Students.Count()
 					</td>
 					<td>
-						<a asp-action="Edit" asp-controller="Group" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
+						<a asp-action="Edit" asp-controller="Group" asp-route-id="@group.Id" class="btn btn-dark">Edit</a>
 					</td>
 					<td>
-						<a asp-action="Delete" asp-controller="Group" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
+						<a asp-action="Delete" asp-controller="Group" asp-route-id="@group.Id" class="btn btn-outline-danger">Delete</a>
 					</td>
 					<td>
-						<a asp-action="ClearGroup" asp-controller="Group" asp-route-id="@obj.Id" class="btn btn-outline-danger">Clear group</a>
+						<a asp-action="ClearGroup" asp-controller="Group" asp-route-id="@group.Id" class="btn btn-outline-danger">Clear group</a>
 					</td>
 				</tr>
 			}

@@ -1,5 +1,4 @@
 ﻿using Mapster;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using University.Domain.Repositories;
 using University.Services.Abstractions;
 using University.Shared;

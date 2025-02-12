@@ -19,19 +19,18 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
         {
+            var viewModel = new GroupIndexViewModel();
+
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                ViewBag.ErrorMessage = errorMessage;
+                viewModel.ErrorMessage = errorMessage;
             }
 
-            if (await _groupService.CanBeCreatedAsync())
-            {
-                ViewData["CanBeCreated"] = true;
-            }
+            viewModel.CanBeCreated = await _groupService.CanBeCreatedAsync();
 
-            var Groups = await _groupService.GetAllAsync();
+            viewModel.Groups = await _groupService.GetAllAsync();
 
-            return View(Groups);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> CreateAsync()
