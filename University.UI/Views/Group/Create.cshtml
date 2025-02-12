@@ -1,4 +1,4 @@
-﻿@model GroupToCreateDTO;
+﻿@model GroupCreateViewModel;
 
 @{
 	ViewData["Title"] = "Create group";
@@ -9,21 +9,21 @@
 <div class="container">
 	<form asp-action="Create">
 		<div class="form-group">
-			<label asp-for="Name"></label>
-			<input asp-for="Name" class="form-control" />
-			<span asp-validation-for="Name" class="text-danger"></span>
+			<label asp-for="Group.Name"></label>
+			<input asp-for="Group.Name" class="form-control" />
+			<span asp-validation-for="Group.Name" class="text-danger"></span>
 		</div>
 		<br />
 		<div class="form-group">
-			<label asp-for="TeacherId"></label>
-			<select asp-for="TeacherId" class="form-control" asp-items="@(new SelectList(ViewBag.Teachers, "Id", "FullName"))"></select>
-			<span asp-validation-for="TeacherId" class="text-danger"></span>
+			<label asp-for="Group.TeacherId"></label>
+			<select asp-for="Group.TeacherId" class="form-control" asp-items="@(new SelectList(Model.Teachers, "Id", "FullName"))"></select>
+			<span asp-validation-for="Group.TeacherId" class="text-danger"></span>
 		</div>
 		<br />
 		<div class="form-group">
-			<label asp-for="CourseId"></label>
-			<select asp-for="CourseId" class="form-control" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))"></select>
-			<span asp-validation-for="CourseId" class="text-danger"></span>
+			<label asp-for="Group.CourseId"></label>
+			<select asp-for="Group.CourseId" class="form-control" asp-items="@(new SelectList(Model.Courses, "Id", "Name"))"></select>
+			<span asp-validation-for="Group.CourseId" class="text-danger"></span>
 		</div>
 		<br /><br />
 		<button type="submit" class="btn btn-dark">Create</button>

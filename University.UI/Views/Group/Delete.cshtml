@@ -1,30 +1,31 @@
-﻿@model GroupDTO;
+﻿@model GroupDeleteViewModel;
 
 @{
 	ViewData["Title"] = "Delete group";
-	var studentsPresent = Model.Students.Any();
+	var studentsPresent = Model.Group.Students.Any();
 }
 
 <h2>Delete Group</h2>
 
 <div class="container">
 	<form asp-action="Delete">
+		<input type="hidden" asp-for="Group.Id" />
 		<div class="form-group">
-			<label asp-for="Name"></label>
-			<input asp-for="Name" class="form-control" disabled />
-			<span asp-validation-for="Name" class="text-danger"></span>
+			<label asp-for="Group.Name"></label>
+			<input asp-for="Group.Name" class="form-control" disabled />
+			<span asp-validation-for="Group.Name" class="text-danger"></span>
 		</div>
 		<br />
 		<div class="form-group">
-			<label asp-for="Teacher"></label>
-			<select asp-for="TeacherId" class="form-control" asp-items="@(new SelectList(ViewBag.Teachers, "Id", "FullName"))" disabled></select>
-			<span asp-validation-for="TeacherId" class="text-danger"></span>
+			<label asp-for="Group.Teacher"></label>
+			<select asp-for="Group.TeacherId" class="form-control" asp-items="@(new SelectList(Model.Teachers, "Id", "FullName"))" disabled></select>
+			<span asp-validation-for="Group.TeacherId" class="text-danger"></span>
 		</div>
 		<br />
 		<div class="form-group">
-			<label asp-for="Course"></label>
-			<select asp-for="CourseId" class="form-control" asp-items="@(new SelectList(ViewBag.Courses, "Id", "Name"))" disabled></select>
-			<span asp-validation-for="CourseId" class="text-danger"></span>
+			<label asp-for="Group.Course"></label>
+			<select asp-for="Group.CourseId" class="form-control" asp-items="@(new SelectList(Model.Courses, "Id", "Name"))" disabled></select>
+			<span asp-validation-for="Group.CourseId" class="text-danger"></span>
 		</div>
 		<br /><br />
 		@if (!studentsPresent)

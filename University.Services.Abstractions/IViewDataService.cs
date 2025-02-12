@@ -6,6 +6,7 @@ namespace University.Services.Abstractions
     public interface IViewDataService
     {
         Task<IEnumerable<GroupDTO>> LoadViewDataForStudents();
-        Task LoadViewDataForGroups(IEnumerable<CourseDTO> courses, IEnumerable<TeacherDTO> teachers);
+        Task<IEnumerable<CourseDTO>> LoadCoursesDataForGroups();
+        Task<IEnumerable<TeacherDTO>> LoadTeachersDataForGroups();
     }
 }

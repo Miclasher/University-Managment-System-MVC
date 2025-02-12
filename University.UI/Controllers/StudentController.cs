@@ -26,14 +26,7 @@ namespace University.UI.Controllers
                 viewModel.ErrorMessage = errorMessage;
             }
 
-            if (await _studentService.CanBeCreatedAsync())
-            {
-                viewModel.CanBeCreated = true;
-            }
-            else
-            {
-                viewModel.CanBeCreated = false;
-            }
+            viewModel.CanBeCreated = await _studentService.CanBeCreatedAsync();
 
             viewModel.Students = await _studentService.GetAllAsync();
 

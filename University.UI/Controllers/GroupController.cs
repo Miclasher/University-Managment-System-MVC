@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using University.Services.Abstractions;
 using University.Shared;
+using University.UI.ViewModels;
 
 namespace University.UI.Controllers
 {
@@ -35,9 +36,12 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> CreateAsync()
         {
-            await LoadDataToViewModel();
+            var viewModel = new GroupCreateViewModel();
 
-            return View();
+            viewModel.Courses = await _viewDataService.LoadCoursesDataForGroups();
+            viewModel.Teachers = await _viewDataService.LoadTeachersDataForGroups();
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -46,26 +50,25 @@ namespace University.UI.Controllers
         {
             await _groupService.CreateAsync(Group);
 
-            await LoadDataToViewModel();
-
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var Group = await _groupService.GetByIdAsync(id);
+            var viewModel = new GroupEditViewModel();
 
-            await LoadDataToViewModel();
+            viewModel.Group = (await _groupService.GetByIdAsync(id)).Adapt<GroupToUpdateDTO>();
 
-            return View(Group.Adapt<GroupToUpdateDTO>());
+            viewModel.Courses = await _viewDataService.LoadCoursesDataForGroups();
+            viewModel.Teachers = await _viewDataService.LoadTeachersDataForGroups();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(GroupToUpdateDTO Group)
         {
-            await LoadDataToViewModel();
-
             await _groupService.UpdateAsync(Group);
 
             return RedirectToAction("Index");
@@ -73,19 +76,20 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var Group = await _groupService.GetByIdAsync(id);
+            var viewModel = new GroupDeleteViewModel();
 
-            await LoadDataToViewModel();
+            viewModel.Group = await _groupService.GetByIdAsync(id);
 
-            return View(Group);
+            viewModel.Courses = await _viewDataService.LoadCoursesDataForGroups();
+            viewModel.Teachers = await _viewDataService.LoadTeachersDataForGroups();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(GroupDTO GroupToDelete)
         {
-            await LoadDataToViewModel();
-
             await _groupService.DeleteAsync(GroupToDelete.Id);
 
             return RedirectToAction("Index");
@@ -96,14 +100,6 @@ namespace University.UI.Controllers
             await _groupService.ClearGroupAsync(id);
 
             return RedirectToAction("Index");
-        }
-
-        private async Task LoadDataToViewModel()
-        {
-            //await _viewDataService.LoadViewDataForGroups(ViewData);
-
-            //ViewBag.Courses = ViewData["Courses"];
-            //ViewBag.Teachers = ViewData["Teachers"];
         }
     }
 }
