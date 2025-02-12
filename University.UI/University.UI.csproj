@@ -14,4 +14,9 @@
     <ProjectReference Include="..\University.Shared\University.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ViewModels\Group\" />
+    <Folder Include="ViewModels\Teacher\" />
+  </ItemGroup>
+
 </Project>

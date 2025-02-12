@@ -1,4 +1,4 @@
-﻿@model StudentToCreateDTO;
+﻿@model StudentCreateViewModel;
 
 @{
 	ViewData["Title"] = "Create Student";
@@ -9,22 +9,22 @@
 <div class="container">
 	<form asp-action="Create">
 		<div class="form-Student">
-			<label asp-for="FirstName"></label>
-			<input asp-for="FirstName" class="form-control" />
-			<span asp-validation-for="FirstName" class="text-danger"></span>
+			<label asp-for="Student.FirstName"></label>
+			<input asp-for="Student.FirstName" class="form-control" />
+			<span asp-validation-for="Student.FirstName" class="text-danger"></span>
 		</div>
 		<br />
 		<div class="form-Student">
-			<label asp-for="LastName"></label>
-			<input asp-for="LastName" class="form-control" />
-			<span asp-validation-for="LastName" class="text-danger"></span>
+			<label asp-for="Student.LastName"></label>
+			<input asp-for="Student.LastName" class="form-control" />
+			<span asp-validation-for="Student.LastName" class="text-danger"></span>
 		</div>
 		<br />
 		<br />
 		<div class="form-Student">
-			<label asp-for="GroupId"></label>
-			<select asp-for="GroupId" class="form-control" asp-items="@(new SelectList(ViewBag.Groups, "Id", "Name"))"></select>
-			<span asp-validation-for="GroupId" class="text-danger"></span>
+			<label asp-for="Student.GroupId"></label>
+			<select asp-for="Student.GroupId" class="form-control" asp-items="@(new SelectList(Model.Groups, "Id", "Name"))"></select>
+			<span asp-validation-for="Student.GroupId" class="text-danger"></span>
 		</div>
 		<br /><br />
 		<button type="submit" class="btn btn-dark">Create</button>

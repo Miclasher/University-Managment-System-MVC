@@ -15,19 +15,18 @@ namespace University.Services
             _repositoryManager = repositoryManager;
         }
 
-        public async Task LoadViewDataForStudents(ViewDataDictionary viewData)
+        public async Task<IEnumerable<GroupDTO>> LoadViewDataForStudents()
         {
-            ArgumentNullException.ThrowIfNull(viewData, nameof(viewData));
-
-            viewData["Groups"] = (await _repositoryManager.Group.GetAllAsync()).Adapt<IEnumerable<GroupDTO>>();
+            return (await _repositoryManager.Group.GetAllAsync()).Adapt<IEnumerable<GroupDTO>>();
         }
 
-        public async Task LoadViewDataForGroups(ViewDataDictionary viewData)
+        public async Task LoadViewDataForGroups(IEnumerable<CourseDTO> courses, IEnumerable<TeacherDTO> teachers)
         {
-            ArgumentNullException.ThrowIfNull(viewData, nameof(viewData));
+            ArgumentNullException.ThrowIfNull(courses, nameof(courses));
+            ArgumentNullException.ThrowIfNull(teachers, nameof(teachers));
 
-            viewData["Courses"] = (await _repositoryManager.Course.GetAllAsync()).Adapt<IEnumerable<CourseDTO>>();
-            viewData["Teachers"] = (await _repositoryManager.Teacher.GetAllAsync()).Adapt<IEnumerable<TeacherDTO>>();
+            courses = (await _repositoryManager.Course.GetAllAsync()).Adapt<IEnumerable<CourseDTO>>();
+            teachers = (await _repositoryManager.Teacher.GetAllAsync()).Adapt<IEnumerable<TeacherDTO>>();
         }
     }
 }

@@ -35,7 +35,7 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> CreateAsync()
         {
-            await LoadViewBagAsync();
+            await LoadDataToViewModel();
 
             return View();
         }
@@ -46,7 +46,7 @@ namespace University.UI.Controllers
         {
             await _groupService.CreateAsync(Group);
 
-            await LoadViewBagAsync();
+            await LoadDataToViewModel();
 
             return RedirectToAction("Index");
         }
@@ -55,7 +55,7 @@ namespace University.UI.Controllers
         {
             var Group = await _groupService.GetByIdAsync(id);
 
-            await LoadViewBagAsync();
+            await LoadDataToViewModel();
 
             return View(Group.Adapt<GroupToUpdateDTO>());
         }
@@ -64,7 +64,7 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(GroupToUpdateDTO Group)
         {
-            await LoadViewBagAsync();
+            await LoadDataToViewModel();
 
             await _groupService.UpdateAsync(Group);
 
@@ -75,7 +75,7 @@ namespace University.UI.Controllers
         {
             var Group = await _groupService.GetByIdAsync(id);
 
-            await LoadViewBagAsync();
+            await LoadDataToViewModel();
 
             return View(Group);
         }
@@ -84,7 +84,7 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(GroupDTO GroupToDelete)
         {
-            await LoadViewBagAsync();
+            await LoadDataToViewModel();
 
             await _groupService.DeleteAsync(GroupToDelete.Id);
 
@@ -98,12 +98,12 @@ namespace University.UI.Controllers
             return RedirectToAction("Index");
         }
 
-        private async Task LoadViewBagAsync()
+        private async Task LoadDataToViewModel()
         {
-            await _viewDataService.LoadViewDataForGroups(ViewData);
+            //await _viewDataService.LoadViewDataForGroups(ViewData);
 
-            ViewBag.Courses = ViewData["Courses"];
-            ViewBag.Teachers = ViewData["Teachers"];
+            //ViewBag.Courses = ViewData["Courses"];
+            //ViewBag.Teachers = ViewData["Teachers"];
         }
     }
 }

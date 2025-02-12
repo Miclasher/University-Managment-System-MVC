@@ -1,8 +1,7 @@
-﻿@model IEnumerable<StudentDTO>;
+﻿@model StudentIndexViewModel;
 
 @{
 	ViewData["Title"] = "Student list";
-	var canBeCreated = (bool?)ViewData["CanBeCreated"] ?? false;
 }
 
 <div class="container">
@@ -10,13 +9,13 @@
         <div class="col-6 pb-3">
             <h2 class="text-start">Students list</h2>
 
-            @if (ViewBag.ErrorMessage is not null)
+            @if (Model.ErrorMessage is not null)
             {
-                <p class="text-danger">@ViewBag.ErrorMessage</p>
+                <p class="text-danger">Model.ErrorMessage</p>
             }
         </div>
         <div class="col-6 text-end">
-			@if (canBeCreated)
+			@if (Model.CanBeCreated)
 			{
                 <a asp-action="Create" asp-controller="Student" class="btn btn-dark">Create Student</a>
 			}
@@ -45,23 +44,23 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var obj in Model)
+            @foreach (var student in Model.Students)
             {
                 <tr>
                     <td>
-                        @obj.FirstName
+                        @student.FirstName
                     </td>
                     <td>
-                        @obj.LastName
+                        @student.LastName
                     </td>
                     <td>
-						@obj.Group.Name
+						@student.Group.Name
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-controller="Student" asp-route-id="@obj.Id" class="btn btn-dark">Edit</a>
+                        <a asp-action="Edit" asp-controller="Student" asp-route-id="@student.Id" class="btn btn-dark">Edit</a>
                     </td>
                     <td>
-                        <a asp-action="Delete" asp-controller="Student" asp-route-id="@obj.Id" class="btn btn-outline-danger">Delete</a>
+                        <a asp-action="Delete" asp-controller="Student" asp-route-id="@student.Id" class="btn btn-outline-danger">Delete</a>
                     </td>
                 </tr>
             }

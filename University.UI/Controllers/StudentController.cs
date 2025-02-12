@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using University.Services.Abstractions;
 using University.Shared;
+using University.UI.ViewModels;
 
 namespace University.UI.Controllers
 {
@@ -18,26 +19,34 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> IndexAsync(string errorMessage)
         {
+            var viewModel = new StudentIndexViewModel();
+
             if (!string.IsNullOrEmpty(errorMessage))
             {
-                ViewBag.ErrorMessage = errorMessage;
+                viewModel.ErrorMessage = errorMessage;
             }
 
             if (await _studentService.CanBeCreatedAsync())
             {
-                ViewData["CanBeCreated"] = true;
+                viewModel.CanBeCreated = true;
+            }
+            else
+            {
+                viewModel.CanBeCreated = false;
             }
 
-            var Students = await _studentService.GetAllAsync();
+            viewModel.Students = await _studentService.GetAllAsync();
 
-            return View(Students);
+            return View(viewModel);
         }
 
         public async Task<IActionResult> CreateAsync()
         {
-            await LoadViewBagAsync();
+            var viewModel = new StudentCreateViewModel();
 
-            return View();
+            viewModel.Groups = await _viewDataService.LoadViewDataForStudents();
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -46,26 +55,24 @@ namespace University.UI.Controllers
         {
             await _studentService.CreateAsync(student);
 
-            await LoadViewBagAsync();
-
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var Student = await _studentService.GetByIdAsync(id);
+            var viewModel = new StudentEditViewModel();
 
-            await LoadViewBagAsync();
+            viewModel.Student = (await _studentService.GetByIdAsync(id)).Adapt<StudentToUpdateDTO>();
 
-            return View(Student.Adapt<StudentToUpdateDTO>());
+            viewModel.Groups = await _viewDataService.LoadViewDataForStudents();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(StudentToUpdateDTO student)
         {
-            await LoadViewBagAsync();
-
             await _studentService.UpdateAsync(student);
 
             return RedirectToAction("Index");
@@ -73,29 +80,22 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var Student = await _studentService.GetByIdAsync(id);
+            var viewModel = new StudentDeleteViewModel();
 
-            await LoadViewBagAsync();
+            viewModel.Student = await _studentService.GetByIdAsync(id);
 
-            return View(Student);
+            viewModel.Groups = await _viewDataService.LoadViewDataForStudents();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteAsync(StudentDTO studentToDelete)
         {
-            await LoadViewBagAsync();
-
             await _studentService.DeleteAsync(studentToDelete.Id);
 
             return RedirectToAction("Index");
-        }
-
-        private async Task LoadViewBagAsync()
-        {
-            await _viewDataService.LoadViewDataForStudents(ViewData);
-
-            ViewBag.Groups = ViewData["Groups"];
         }
     }
 }
