@@ -1,14 +1,13 @@
-﻿@model IEnumerable<StudentDTO>
+﻿@model GroupStudentsViewModel
 
 @{
 	ViewData["Title"] = "Students";
-	var courseId = (Guid?)ViewBag.CourseId;
 }
 
 <h1>Main page</h1>
 
 <div class="container">
-	@if (!Model.Any())
+	@if (!Model.Students.Any())
 	{
 		<br />
 		<p class="h5">No students found. You can add them using <a class="link-dark" asp-controller="Students" asp-action="Index">student page</a>.</p>
@@ -17,10 +16,7 @@
 	{
 		<h2>Students</h2>
 
-		@if (ViewBag.CourseId is not null)
-		{
-			<a asp-action="CourseGroups" asp-route-courseId="@courseId" class="btn btn-dark">Back</a>
-		}
+		<a asp-action="CourseGroups" asp-route-courseId="@Model.CourseId" class="btn btn-dark">Back</a>
 
 		<table class="table table-borderless table-striped">
 			<thead>
@@ -34,7 +30,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				@foreach (var student in Model)
+				@foreach (var student in Model.Students)
 				{
 					<tr>
 						<td>

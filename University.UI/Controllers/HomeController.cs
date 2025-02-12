@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using University.Services.Abstractions;
+using University.UI.ViewModels;
 
 namespace University.UI.Controllers
 {
@@ -30,8 +31,6 @@ namespace University.UI.Controllers
         {
             var course = await _courseService.GetCourseWithGroupDetailsByIdAsync(courseId);
 
-            TempData["CourseId"] = courseId;
-
             return View(course.Groups);
         }
 
@@ -39,12 +38,13 @@ namespace University.UI.Controllers
         {
             var group = await _groupService.GetByIdAsync(groupId);
 
-            if (TempData != null)
+            var model = new GroupStudentsViewModel
             {
-                ViewBag.CourseId = TempData["CourseId"];
-            }
+                CourseId = group.CourseId,
+                Students = group.Students
+            };
 
-            return View(group.Students);
+            return View(model);
         }
     }
 }
