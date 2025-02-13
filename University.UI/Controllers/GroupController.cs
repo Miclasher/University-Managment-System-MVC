@@ -47,6 +47,11 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(GroupToCreateDTO group)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", new { errorMessage = "Invalid group data" });
+            }
+
             await _groupService.CreateAsync(group);
 
             return RedirectToAction("Index");
@@ -68,6 +73,11 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(GroupToUpdateDTO group)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", new { errorMessage = "Invalid group data" });
+            }
+
             await _groupService.UpdateAsync(group);
 
             return RedirectToAction("Index");

@@ -38,6 +38,11 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(TeacherToCreateDTO teacher)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", new { errorMessage = "Invalid teacher data" });
+            }
+
             await _teacherService.CreateAsync(teacher);
 
             return RedirectToAction("Index");
@@ -54,6 +59,11 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(TeacherToUpdateDTO teacher)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", new { errorMessage = "Invalid teacher data" });
+            }
+
             await _teacherService.UpdateAsync(teacher);
 
             return RedirectToAction("Index");

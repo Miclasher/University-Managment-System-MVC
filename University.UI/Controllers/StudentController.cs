@@ -46,6 +46,11 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateAsync(StudentToCreateDTO student)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", new { errorMessage = "Invalid student data" });
+            }
+
             await _studentService.CreateAsync(student);
 
             return RedirectToAction("Index");
@@ -66,6 +71,11 @@ namespace University.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(StudentToUpdateDTO student)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index", new { errorMessage = "Invalid student data" });
+            }
+
             await _studentService.UpdateAsync(student);
 
             return RedirectToAction("Index");
