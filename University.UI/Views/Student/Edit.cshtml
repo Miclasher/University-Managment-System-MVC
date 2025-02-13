@@ -6,31 +6,26 @@
 
 <h2>Edit Student</h2>
 
-<div class="container">
-	<form asp-action="Edit">
-		<input type="hidden" asp-for="Student.Id" />
-		<div class="form-Student">
-			<label asp-for="Student.FirstName"></label>
-			<input asp-for="Student.FirstName" class="form-control" />
-			<span asp-validation-for="Student.FirstName" class="text-danger"></span>
-		</div>
-		<br />
-		<div class="form-Student">
-			<label asp-for="Student.LastName"></label>
-			<input asp-for="Student.LastName" class="form-control" />
-			<span asp-validation-for="Student.LastName" class="text-danger"></span>
-		</div>
-		<br />
-		<br />
-		<div class="form-Student">
-			<label asp-for="Student.GroupId"></label>
-			<select asp-for="Student.GroupId" class="form-control" asp-items="@(new SelectList(Model.Groups, "Id", "Name"))"></select>
-			<span asp-validation-for="Student.GroupId" class="text-danger"></span>
-		</div>
-		<br /><br />
-		<button type="submit" class="btn btn-dark">Edit</button>
-	</form>
-</div>
+<form class="container" asp-action="Edit">
+	<input type="hidden" asp-for="Student.Id" />
+	<div class="form-group m-3">
+		<label asp-for="Student.FirstName"></label>
+		<input asp-for="Student.FirstName" class="form-control" />
+		<span asp-validation-for="Student.FirstName" class="text-danger"></span>
+	</div>
+	<div class="form-group m-3">
+		<label asp-for="Student.LastName"></label>
+		<input asp-for="Student.LastName" class="form-control" />
+		<span asp-validation-for="Student.LastName" class="text-danger"></span>
+	</div>
+	<div class="form-group m-3">
+		<label asp-for="Student.GroupId"></label>
+		<select asp-for="Student.GroupId" class="form-control" asp-items="@(new SelectList(Model.Groups, "Id", "Name"))"></select>
+		<span asp-validation-for="Student.GroupId" class="text-danger"></span>
+	</div>
+	<button type="submit" class="m-3 btn btn-dark">Edit</button>
+</form>
+
 
 @section Scripts {
 	@{

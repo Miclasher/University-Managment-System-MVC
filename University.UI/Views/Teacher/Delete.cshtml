@@ -7,28 +7,24 @@
 
 <h2>Delete teacher</h2>
 
-<div class="container">
-	<form asp-action="Delete">
-		<div class="form-group">
-			<label asp-for="FirstName"></label>
-			<input asp-for="FirstName" class="form-control" disabled />
-		</div>
-		<br />
-		<div class="form-group">
-			<label asp-for="LastName"></label>
-			<input asp-for="LastName" class="form-control" disabled />
-		</div>
-		<br /><br />
-		@if (isTutor)
-		{
-			<p class="text-danger">You can't delete this teacher. He/she is a group tutor</p>
-		}
-		else
-		{
-			<button type="submit" class="btn btn-outline-danger">Delete</button>
-		}
-	</form>
-</div>
+<form class="container" asp-action="Delete">
+	<div class="form-group m-3">
+		<label asp-for="FirstName"></label>
+		<input asp-for="FirstName" class="form-control" disabled />
+	</div>
+	<div class="form-group m-3">
+		<label asp-for="LastName"></label>
+		<input asp-for="LastName" class="form-control" disabled />
+	</div>
+	@if (isTutor)
+	{
+		<p class="m-3 text-danger">You can't delete this teacher. He/she is a group tutor</p>
+	}
+	else
+	{
+		<button type="submit" class="m-3 btn btn-outline-danger">Delete</button>
+	}
+</form>
 
 @section Scripts {
 	@{
