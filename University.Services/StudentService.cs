@@ -17,21 +17,21 @@ namespace University.Services
 
         public async Task<IEnumerable<StudentDTO>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var Students = await _repositoryManager.Student.GetAllAsync(cancellationToken);
+            var students = await _repositoryManager.Student.GetAllAsync(cancellationToken);
 
-            return Students.Adapt<IEnumerable<StudentDTO>>();
+            return students.Adapt<IEnumerable<StudentDTO>>();
         }
 
         public async Task<StudentDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var Student = await _repositoryManager.Student.GetByIdAsync(id, cancellationToken);
+            var student = await _repositoryManager.Student.GetByIdAsync(id, cancellationToken);
 
-            if (Student is null)
+            if (student is null)
             {
                 throw new KeyNotFoundException($"Student with id {id} not found. It is possible that someone else deleted this student.");
             }
 
-            return Student.Adapt<StudentDTO>();
+            return student.Adapt<StudentDTO>();
         }
 
         public async Task CreateAsync(StudentToCreateDTO student, CancellationToken cancellationToken = default)
@@ -47,14 +47,14 @@ namespace University.Services
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var Student = await _repositoryManager.Student.GetByIdAsync(id, cancellationToken);
+            var student = await _repositoryManager.Student.GetByIdAsync(id, cancellationToken);
 
-            if (Student is null)
+            if (student is null)
             {
                 throw new KeyNotFoundException($"Student with id {id} not found. It is possible that someone else deleted this student.");
             }
 
-            _repositoryManager.Student.Remove(Student, cancellationToken);
+            _repositoryManager.Student.Remove(student, cancellationToken);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellationToken);
         }
@@ -63,18 +63,18 @@ namespace University.Services
         {
             ArgumentNullException.ThrowIfNull(student, nameof(student));
 
-            var StudentToUpdate = await _repositoryManager.Student.GetByIdAsync(student.Id, cancellation);
+            var studentToUpdate = await _repositoryManager.Student.GetByIdAsync(student.Id, cancellation);
 
-            if (StudentToUpdate is null)
+            if (studentToUpdate is null)
             {
                 throw new KeyNotFoundException($"Student with id {student.Id} not found. It is possible that someone else deleted this student.");
             }
 
-            StudentToUpdate.FirstName = student.FirstName;
-            StudentToUpdate.LastName = student.LastName;
-            StudentToUpdate.GroupId = student.GroupId;
+            studentToUpdate.FirstName = student.FirstName;
+            studentToUpdate.LastName = student.LastName;
+            studentToUpdate.GroupId = student.GroupId;
 
-            _repositoryManager.Student.Update(StudentToUpdate, cancellation);
+            _repositoryManager.Student.Update(studentToUpdate, cancellation);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellation);
         }

@@ -50,9 +50,9 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> EditAsync(Guid id)
         {
-            var Teacher = await _teacherService.GetByIdAsync(id);
+            var teacher = await _teacherService.GetByIdAsync(id);
 
-            return View(Teacher.Adapt<TeacherToUpdateDTO>());
+            return View(teacher.Adapt<TeacherToUpdateDTO>());
         }
 
         [HttpPost]
@@ -71,9 +71,9 @@ namespace University.UI.Controllers
 
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            var Teacher = await _teacherService.GetByIdAsync(id);
+            var teacher = await _teacherService.GetByIdAsync(id);
 
-            return View(Teacher);
+            return View(teacher);
         }
 
         [HttpPost]

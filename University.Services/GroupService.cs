@@ -17,21 +17,21 @@ namespace University.Services
 
         public async Task<IEnumerable<GroupDTO>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var Groups = await _repositoryManager.Group.GetAllAsync(cancellationToken);
+            var groups = await _repositoryManager.Group.GetAllAsync(cancellationToken);
 
-            return Groups.Adapt<IEnumerable<GroupDTO>>();
+            return groups.Adapt<IEnumerable<GroupDTO>>();
         }
 
         public async Task<GroupDTO> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var Group = await _repositoryManager.Group.GetByIdAsync(id, cancellationToken);
+            var group = await _repositoryManager.Group.GetByIdAsync(id, cancellationToken);
 
-            if (Group is null)
+            if (group is null)
             {
                 throw new KeyNotFoundException($"Group with id {id} not found. It is possible that someone else deleted this group.");
             }
 
-            return Group.Adapt<GroupDTO>();
+            return group.Adapt<GroupDTO>();
         }
 
         public async Task CreateAsync(GroupToCreateDTO group, CancellationToken cancellationToken = default)
@@ -68,18 +68,18 @@ namespace University.Services
         {
             ArgumentNullException.ThrowIfNull(group, nameof(group));
 
-            var GroupToUpdate = await _repositoryManager.Group.GetByIdAsync(group.Id, cancellation);
+            var groupToUpdate = await _repositoryManager.Group.GetByIdAsync(group.Id, cancellation);
 
-            if (GroupToUpdate is null)
+            if (groupToUpdate is null)
             {
                 throw new KeyNotFoundException($"Group with id {group.Id} not found. It is possible that someone else deleted this group.");
             }
 
-            GroupToUpdate.Name = group.Name;
-            GroupToUpdate.CourseId = group.CourseId;
-            GroupToUpdate.TeacherId = group.TeacherId;
+            groupToUpdate.Name = group.Name;
+            groupToUpdate.CourseId = group.CourseId;
+            groupToUpdate.TeacherId = group.TeacherId;
 
-            _repositoryManager.Group.Update(GroupToUpdate, cancellation);
+            _repositoryManager.Group.Update(groupToUpdate, cancellation);
 
             await _repositoryManager.UnitOfWork.SaveChangesAsync(cancellation);
         }
