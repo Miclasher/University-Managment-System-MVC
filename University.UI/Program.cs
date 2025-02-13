@@ -37,7 +37,9 @@ namespace University.UI
             builder.Services.AddWebOptimizer(pipeline =>
             {
                 pipeline.AddCssBundle("/css/bundle.css",
-                    "wwwroot/css/**/*.css");
+                    "css/*.css",
+                    "lib/bootstrap/dist/css/bootstrap.min.css",
+                    "/University.UI.styles.css");
                 pipeline.AddJavaScriptBundle("/js/bundle.js",
                     "wwwroot/lib/jquery/dist/jquery.min.js",
                     "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
