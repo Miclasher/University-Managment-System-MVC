@@ -34,23 +34,31 @@ namespace University.UI
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddWebOptimizer();
+            builder.Services.AddWebOptimizer(pipeline =>
+            {
+                pipeline.AddCssBundle("/css/bundle.css",
+                    "wwwroot/css/**/*.css");
+                pipeline.AddJavaScriptBundle("/js/bundle.js",
+                    "wwwroot/lib/jquery/dist/jquery.min.js",
+                    "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+                    "wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
+                    "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+                    "wwwroot/js/**/*.js");
+            });
 
             var app = builder.Build();
+
+            app.UseWebOptimizer();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseHttpsRedirection();
-
-            app.UseWebOptimizer();
 
             app.UseStaticFiles();
 
