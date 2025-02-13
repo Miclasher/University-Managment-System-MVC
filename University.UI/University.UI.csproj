@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.433" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\University.Infrastructure\University.Infrastructure.csproj" />
     <ProjectReference Include="..\University.Services.Abstractions\University.Services.Abstractions.csproj" />
     <ProjectReference Include="..\University.Services\University.Services.csproj" />

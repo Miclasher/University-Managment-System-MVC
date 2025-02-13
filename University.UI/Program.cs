@@ -6,6 +6,7 @@ using University.Services;
 using University.Services.Abstractions;
 using University.UI.Controllers;
 using University.UI.Middleware;
+using WebOptimizer;
 
 namespace University.UI
 {
@@ -33,6 +34,8 @@ namespace University.UI
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            builder.Services.AddWebOptimizer();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -46,6 +49,9 @@ namespace University.UI
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.UseHttpsRedirection();
+
+            app.UseWebOptimizer();
+
             app.UseStaticFiles();
 
             app.UseRouting();
