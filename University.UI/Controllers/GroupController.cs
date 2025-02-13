@@ -45,9 +45,9 @@ namespace University.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync(GroupToCreateDTO Group)
+        public async Task<IActionResult> CreateAsync(GroupToCreateDTO group)
         {
-            await _groupService.CreateAsync(Group);
+            await _groupService.CreateAsync(group);
 
             return RedirectToAction("Index");
         }
@@ -66,9 +66,9 @@ namespace University.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(GroupToUpdateDTO Group)
+        public async Task<IActionResult> EditAsync(GroupToUpdateDTO group)
         {
-            await _groupService.UpdateAsync(Group);
+            await _groupService.UpdateAsync(group);
 
             return RedirectToAction("Index");
         }
@@ -87,9 +87,9 @@ namespace University.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteAsync(GroupDTO GroupToDelete)
+        public async Task<IActionResult> DeleteAsync(GroupDTO groupToDelete)
         {
-            await _groupService.DeleteAsync(GroupToDelete.Id);
+            await _groupService.DeleteAsync(groupToDelete.Id);
 
             return RedirectToAction("Index");
         }
