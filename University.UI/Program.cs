@@ -41,11 +41,11 @@ namespace University.UI
                     "lib/bootstrap/dist/css/bootstrap.min.css",
                     "/University.UI.styles.css");
                 pipeline.AddJavaScriptBundle("/js/bundle.js",
-                    "wwwroot/lib/jquery/dist/jquery.min.js",
-                    "wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.min.js",
-                    "wwwroot/lib/jquery-validation/dist/jquery.validate.min.js",
-                    "wwwroot/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
-                    "wwwroot/js/**/*.js");
+                    "lib/jquery/dist/jquery.min.js",
+                    "lib/bootstrap/dist/js/bootstrap.bundle.min.js",
+                    "lib/jquery-validation/dist/jquery.validate.min.js",
+                    "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+                    "js/**/*.js");
             });
 
             var app = builder.Build();
