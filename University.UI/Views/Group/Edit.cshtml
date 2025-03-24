@@ -1,0 +1,33 @@
+﻿@model GroupEditViewModel;
+
+@{
+	ViewData["Title"] = "Edit group";
+}
+
+<h2>Edit Group</h2>
+
+<form class="container" asp-action="Edit">
+	<input type="hidden" asp-for="Group.Id" />
+	<div class="form-group m-3">
+		<label asp-for="Group.Name"></label>
+		<input asp-for="Group.Name" class="form-control" />
+		<span asp-validation-for="Group.Name" class="text-danger"></span>
+	</div>
+	<div class="form-group m-3">
+		<label asp-for="Group.TeacherId"></label>
+		<select asp-for="Group.TeacherId" class="form-control" asp-items="@(new SelectList(Model.Teachers, "Id", "FullName"))"></select>
+		<span asp-validation-for="Group.TeacherId" class="text-danger"></span>
+	</div>
+	<div class="form-group m-3">
+		<label asp-for="Group.CourseId"></label>
+		<select asp-for="Group.CourseId" class="form-control" asp-items="@(new SelectList(Model.Courses, "Id", "Name"))"></select>
+		<span asp-validation-for="Group.CourseId" class="text-danger"></span>
+	</div>
+	<button type="submit" class="m-3 btn btn-dark">Submit</button>
+</form>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

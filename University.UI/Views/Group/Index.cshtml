@@ -1,0 +1,73 @@
+﻿@model GroupIndexViewModel;
+
+@{
+	ViewData["Title"] = "Group list";
+}
+
+<div class="container">
+	<div class="row pt-4">
+		<div class="col-6 pb-3">
+			<h2 class="text-start">Groups list</h2>
+
+			@if (Model.ErrorMessage is not null)
+			{
+				<p class="text-danger">@Model.ErrorMessage</p>
+			}
+		</div>
+		<div class="col-6 text-end">
+			@if (Model.CanBeCreated)
+			{
+				<a asp-action="Create" asp-controller="Group" class="btn btn-dark">Create Group</a>
+			}
+			else
+			{
+				<p class="text-danger">Please add teachers and courses to create group</p>
+			}
+		</div>
+	</div>
+	<table class="table table-borderless table-striped">
+		<thead>
+			<tr>
+				<th>
+					Group name
+				</th>
+				<th>
+					Group tutor
+				</th>
+				<th>
+					Students count
+				</th>
+				<th></th>
+				<th>
+					Actions
+				</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var group in Model.Groups)
+			{
+				<tr>
+					<td>
+						@group.Name
+					</td>
+					<td>
+						@group.Teacher.FullName
+					</td>
+					<td>
+						@group.Students.Count()
+					</td>
+					<td>
+						<a asp-action="Edit" asp-controller="Group" asp-route-id="@group.Id" class="btn btn-dark">Edit</a>
+					</td>
+					<td>
+						<a asp-action="Delete" asp-controller="Group" asp-route-id="@group.Id" class="btn btn-outline-danger">Delete</a>
+					</td>
+					<td>
+						<a asp-action="ClearGroup" asp-controller="Group" asp-route-id="@group.Id" class="btn btn-outline-danger">Clear group</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>

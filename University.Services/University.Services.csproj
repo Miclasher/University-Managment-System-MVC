@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Mapster" Version="7.4.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\University.Domain\University.Domain.csproj" />
+		<ProjectReference Include="..\University.Services.Abstractions\University.Services.Abstractions.csproj" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="University.Tests" />
+	</ItemGroup>
+</Project>

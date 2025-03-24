@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>940fb1f8-ba20-4cd9-b1a9-fc3a3deb9a5e</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LigerShark.WebOptimizer.Core" Version="3.0.433" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\University.Infrastructure\University.Infrastructure.csproj" />
+    <ProjectReference Include="..\University.Services.Abstractions\University.Services.Abstractions.csproj" />
+    <ProjectReference Include="..\University.Services\University.Services.csproj" />
+    <ProjectReference Include="..\University.Shared\University.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

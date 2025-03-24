@@ -1,0 +1,34 @@
+﻿@model StudentDeleteViewModel;
+
+@{
+	ViewData["Title"] = "Delete Student";
+}
+
+<h2>Delete Student</h2>
+
+<form class="container" asp-action="Delete">
+	<input type="hidden" asp-for="Student.Id" />
+	<div class="form-group m-3">
+		<label asp-for="Student.FirstName"></label>
+		<input asp-for="Student.FirstName" class="form-control" disabled />
+		<span asp-validation-for="Student.FirstName" class="text-danger"></span>
+	</div>
+	<div class="form-group m-3">
+		<label asp-for="Student.LastName"></label>
+		<input asp-for="Student.LastName" class="form-control" disabled />
+		<span asp-validation-for="Student.LastName" class="text-danger"></span>
+	</div>
+	<div class="form-group m-3">
+		<label asp-for="Student.Group"></label>
+		<select asp-for="Student.GroupId" class="form-control" asp-items="@(new SelectList(Model.Groups, "Id", "Name"))" disabled></select>
+		<span asp-validation-for="Student.GroupId" class="text-danger"></span>
+	</div>
+	<button type="submit" class="m-3 btn btn-dark">Delete</button>
+</form>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

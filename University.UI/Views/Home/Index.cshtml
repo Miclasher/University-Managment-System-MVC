@@ -1,0 +1,52 @@
+﻿@model HomeIndexViewModel
+
+@{
+	ViewData["Title"] = "Courses";
+}
+
+<h1>Main page</h1>
+
+@if (Model.ErrorMessage is not null)
+{
+	<p class="text-danger">@Model.ErrorMessage</p>
+}
+
+<div class="container">
+	@if (!Model.Courses.Any())
+	{
+		<p class="m-3 h5">No courses found. You can add them using <a class="link-dark" asp-controller="Courses" asp-action="Index">course page</a>.</p>
+	}
+	else
+	{
+		<h2>Courses</h2>
+
+		<table class="table table-borderless table-striped">
+			<thead>
+				<tr>
+					<td>
+						<h4>Name</h4>
+					</td>
+					<td>
+						<h4>Description</h4>
+					</td>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var course in Model.Courses)
+				{
+					<tr>
+						<td>
+							<p>@course.Name</p>
+						</td>
+						<td>
+							<p>@course.Description</p>
+						</td>
+						<td>
+							<a class="btn btn-dark" asp-action="CourseGroups" asp-route-courseId="@course.Id">Group list</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	}
+</div>

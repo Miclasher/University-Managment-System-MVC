@@ -1,0 +1,33 @@
+﻿@model TeacherDTO;
+
+@{
+	ViewData["Title"] = "Delete teacher";
+	var isTutor = Model.Groups.Any();
+}
+
+<h2>Delete teacher</h2>
+
+<form class="container" asp-action="Delete">
+	<div class="form-group m-3">
+		<label asp-for="FirstName"></label>
+		<input asp-for="FirstName" class="form-control" disabled />
+	</div>
+	<div class="form-group m-3">
+		<label asp-for="LastName"></label>
+		<input asp-for="LastName" class="form-control" disabled />
+	</div>
+	@if (isTutor)
+	{
+		<p class="m-3 text-danger">You can't delete this teacher. He/she is a group tutor</p>
+	}
+	else
+	{
+		<button type="submit" class="m-3 btn btn-outline-danger">Delete</button>
+	}
+</form>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}
